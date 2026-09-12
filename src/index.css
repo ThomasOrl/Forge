@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root { height: 100%; }
+
+body {
+  font-family: 'Inter', 'Manrope', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+* { box-sizing: border-box; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: #262626; border-radius: 8px; }
+.light ::-webkit-scrollbar-thumb { background: #E5E5E5; }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+.card {
+  @apply bg-dark-card border border-dark-border rounded-card transition-colors duration-200;
+}
+.light .card {
+  @apply bg-light-card border-light-border shadow-light;
+}
+
+.card-alt {
+  @apply bg-dark-cardAlt border border-dark-border rounded-card;
+}
+.light .card-alt {
+  @apply bg-light-cardAlt border-light-border;
+}
+
+.text-primary { @apply text-dark-text; }
+.light .text-primary { @apply text-light-text; }
+
+.text-secondary { @apply text-dark-textSecondary; }
+.light .text-secondary { @apply text-light-textSecondary; }
+
+.bg-app { @apply bg-dark-bg; }
+.light .bg-app { @apply bg-light-bg; }
+
+.border-app { @apply border-dark-border; }
+.light .border-app { @apply border-light-border; }
