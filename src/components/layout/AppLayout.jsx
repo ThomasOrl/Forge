@@ -14,7 +14,7 @@ export default function AppLayout() {
 
         <footer className="hidden md:block border-t border-app py-5 px-6">
           <div className="max-w-[1200px] mx-auto flex items-center justify-between text-xs text-secondary">
-            <span>© {new Date().getFullYear()} Forge your Body</span>
+            <span>© {new Date().getFullYear()} Forge</span>
             <span>Design by ThomasOrls</span>
           </div>
         </footer>

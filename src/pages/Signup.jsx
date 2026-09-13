@@ -67,7 +67,7 @@ export default function Signup() {
         <div className="flex items-center gap-2 justify-center mb-8">
           <img
             src="/logo-simple.png"
-            alt="Forge your Body"
+            alt="Forge"
             className="w-20 h-20 object-contain"
           />
         </div>

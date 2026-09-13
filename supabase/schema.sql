@@ -1,5 +1,5 @@
 -- ============================================================
--- FORGE YOUR BODY — SCHEMA SUPABASE COMPLET
+-- Forge — SCHEMA SUPABASE COMPLET
 -- À exécuter dans l'éditeur SQL de votre projet Supabase
 -- ============================================================
 

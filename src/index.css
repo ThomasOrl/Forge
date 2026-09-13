@@ -2,22 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root { height: 100%; }
-
-body {
-  font-family: 'Inter', 'Manrope', system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  transition: background-color 0.2s ease, color 0.2s ease;
+html,
+body,
+#root {
+  height: 100%;
 }
 
-* { box-sizing: border-box; }
+body {
+  font-family: "Inter", "Manrope", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
 
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-thumb { background: #262626; border-radius: 8px; }
-.light ::-webkit-scrollbar-thumb { background: #E5E5E5; }
+* {
+  box-sizing: border-box;
+}
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 8px;
+}
+.light ::-webkit-scrollbar-thumb {
+  background: #e5e5e5;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   opacity: 1;
 }
 
@@ -35,14 +51,91 @@ input[type=number]::-webkit-outer-spin-button {
   @apply bg-light-cardAlt border-light-border;
 }
 
-.text-primary { @apply text-dark-text; }
-.light .text-primary { @apply text-light-text; }
+.text-primary {
+  @apply text-dark-text;
+}
+.light .text-primary {
+  @apply text-light-text;
+}
 
-.text-secondary { @apply text-dark-textSecondary; }
-.light .text-secondary { @apply text-light-textSecondary; }
+.text-secondary {
+  @apply text-dark-textSecondary;
+}
+.light .text-secondary {
+  @apply text-light-textSecondary;
+}
 
-.bg-app { @apply bg-dark-bg; }
-.light .bg-app { @apply bg-light-bg; }
+.bg-app {
+  @apply bg-dark-bg;
+}
+.light .bg-app {
+  @apply bg-light-bg;
+}
 
-.border-app { @apply border-dark-border; }
-.light .border-app { @apply border-light-border; }
+.border-app {
+  @apply border-dark-border;
+}
+.light .border-app {
+  @apply border-light-border;
+}
+
+/* Workout completion */
+@keyframes forge-confetti-fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--confetti-drift), 110vh, 0)
+      rotate(var(--confetti-rotation));
+    opacity: 0;
+  }
+}
+
+.forge-confetti-piece {
+  animation: forge-confetti-fall var(--confetti-duration) var(--confetti-delay)
+    ease-out forwards;
+}
+
+@keyframes forge-completion-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(12px);
+  }
+  70% {
+    transform: scale(1.02) translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-completionPop {
+  animation: forge-completion-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes forge-completion-icon {
+  0% {
+    transform: scale(0.7) rotate(-10deg);
+  }
+  70% {
+    transform: scale(1.08) rotate(4deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.animate-completionIcon {
+  animation: forge-completion-icon 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.08s
+    both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .forge-confetti-piece,
+  .animate-completionPop,
+  .animate-completionIcon {
+    animation: none !important;
+  }
+}
