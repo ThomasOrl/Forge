@@ -18,6 +18,7 @@ export default function Signup() {
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [showEmailConfirmation, setShowEmailConfirmation] = useState(false);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -58,7 +59,12 @@ export default function Signup() {
       }
       return;
     }
-    navigate("/");
+    setShowEmailConfirmation(true);
+  };
+
+  const handleGoToLogin = () => {
+    setShowEmailConfirmation(false);
+    navigate("/login");
   };
 
   return (
@@ -142,6 +148,51 @@ export default function Signup() {
           </p>
         </div>
       </div>
+
+      {showEmailConfirmation && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center px-6"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="email-confirmation-title"
+        >
+          <div
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm animate-fadeIn"
+            onClick={() => setShowEmailConfirmation(false)}
+          />
+
+          <div className="relative w-full max-w-md card p-8 text-center animate-scaleIn">
+            <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-accent/10 border border-accent/20">
+              <span className="text-3xl" aria-hidden="true">
+                ✉️
+              </span>
+            </div>
+
+            <h2
+              id="email-confirmation-title"
+              className="text-2xl font-bold text-primary mb-3"
+            >
+              {t("auth.emailConfirmationTitle")}
+            </h2>
+
+            <p className="text-sm text-secondary leading-6 mb-2">
+              {t("auth.emailConfirmationMessage")}
+            </p>
+
+            <p className="text-sm font-semibold text-primary break-all mb-6">
+              {form.email}
+            </p>
+
+            <p className="text-xs text-secondary leading-5 mb-6">
+              {t("auth.emailConfirmationHint")}
+            </p>
+
+            <Button size="lg" className="w-full" onClick={handleGoToLogin}>
+              {t("auth.goToLogin")}
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

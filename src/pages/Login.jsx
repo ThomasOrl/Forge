@@ -28,7 +28,18 @@ export default function Login() {
     const { error: err } = await signIn({ email, password });
     setLoading(false);
     if (err) {
-      setError(t("auth.errors.invalidCredentials"));
+      const errorMessage = err.message?.toLowerCase() || "";
+
+      if (
+        errorMessage.includes("email not confirmed") ||
+        errorMessage.includes("email_not_confirmed") ||
+        errorMessage.includes("confirm your email")
+      ) {
+        setError(t("auth.errors.emailNotConfirmed"));
+      } else {
+        setError(t("auth.errors.invalidCredentials"));
+      }
+
       return;
     }
     navigate("/");

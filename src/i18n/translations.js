@@ -1,7 +1,7 @@
 export const translations = {
   fr: {
     common: {
-      appName: "Forge your Body",
+      appName: "Forge",
       loading: "Chargement…",
       save: "Enregistrer",
       cancel: "Annuler",
@@ -21,6 +21,7 @@ export const translations = {
     nav: {
       home: "Accueil",
       workout: "Entraînement",
+      exercises: "Mes exercices",
       history: "Historique",
       progress: "Progression",
       profile: "Profil",
@@ -51,8 +52,16 @@ export const translations = {
         required: "Ce champ est obligatoire.",
         generic: "Une erreur est survenue. Veuillez réessayer.",
         invalidCredentials: "Email ou mot de passe incorrect.",
+        emailNotConfirmed:
+          "Veuillez confirmer votre adresse email avant de vous connecter.",
       },
       resetSent: "Un email de réinitialisation a été envoyé.",
+      emailConfirmationTitle: "Vérifiez votre adresse email",
+      emailConfirmationMessage:
+        "Votre compte a bien été créé. Nous vous avons envoyé un email de confirmation à l'adresse :",
+      emailConfirmationHint:
+        "Ouvrez cet email et cliquez sur le lien de confirmation avant de vous connecter à Forge.",
+      goToLogin: "Aller à la connexion",
     },
     dashboard: {
       greeting: "Bonjour",
@@ -185,6 +194,7 @@ export const translations = {
     nav: {
       home: "Home",
       workout: "Workout",
+      exercises: "My exercises",
       history: "History",
       progress: "Progress",
       profile: "Profile",
@@ -214,8 +224,16 @@ export const translations = {
         required: "This field is required.",
         generic: "Something went wrong. Please try again.",
         invalidCredentials: "Incorrect email or password.",
+        emailNotConfirmed:
+          "Please confirm your email address before signing in.",
       },
       resetSent: "A password reset email has been sent.",
+      emailConfirmationTitle: "Verify your email address",
+      emailConfirmationMessage:
+        "Your account has been created. We sent a confirmation email to:",
+      emailConfirmationHint:
+        "Open the email and click the confirmation link before signing in to Forge.",
+      goToLogin: "Go to sign in",
     },
     dashboard: {
       greeting: "Hello",
@@ -347,6 +365,7 @@ export const translations = {
     nav: {
       home: "Inicio",
       workout: "Entrenamiento",
+      exercises: "Mis ejercicios",
       history: "Historial",
       progress: "Progreso",
       profile: "Perfil",
@@ -377,8 +396,16 @@ export const translations = {
         required: "Este campo es obligatorio.",
         generic: "Ocurrió un error. Inténtalo de nuevo.",
         invalidCredentials: "Correo o contraseña incorrectos.",
+        emailNotConfirmed:
+          "Confirma tu dirección de correo electrónico antes de iniciar sesión.",
       },
       resetSent: "Se ha enviado un correo de restablecimiento.",
+      emailConfirmationTitle: "Verifica tu correo electrónico",
+      emailConfirmationMessage:
+        "Tu cuenta ha sido creada. Hemos enviado un correo de confirmación a:",
+      emailConfirmationHint:
+        "Abre el correo y haz clic en el enlace de confirmación antes de iniciar sesión en Forge.",
+      goToLogin: "Ir a iniciar sesión",
     },
     dashboard: {
       greeting: "Hola",
