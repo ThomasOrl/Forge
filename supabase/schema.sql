@@ -38,8 +38,10 @@ create table public.workouts (
   date date not null default current_date,
   started_at timestamptz default now(),
   finished_at timestamptz,
-  duration_seconds integer,
-  total_volume numeric default 0,
+  duration_seconds integer not null default 0
+  check (duration_seconds >= 0),
+  total_volume numeric not null default 0
+  check (total_volume >= 0),
   status text not null default 'in_progress' check (status in ('in_progress','completed')),
   is_demo boolean not null default false,
   created_at timestamptz not null default now()
@@ -51,7 +53,8 @@ create table public.workout_exercises (
   workout_id uuid not null references public.workouts(id) on delete cascade,
   exercise_id uuid not null references public.exercises(id) on delete cascade,
   user_id uuid not null references public.profiles(id) on delete cascade,
-  "order" integer not null default 0,
+  "order" integer not null
+  check ("order" >= 0),
   created_at timestamptz not null default now()
 );
 
@@ -60,9 +63,12 @@ create table public.sets (
   id uuid primary key default gen_random_uuid(),
   workout_exercise_id uuid not null references public.workout_exercises(id) on delete cascade,
   user_id uuid not null references public.profiles(id) on delete cascade,
-  set_number integer not null,
-  weight numeric not null default 0,
-  repetitions integer not null default 0,
+  set_number integer not null
+  check (set_number > 0),
+  weight numeric not null
+  check (weight >= 0),
+  repetitions integer not null
+  check (repetitions >= 0),
   created_at timestamptz not null default now()
 );
 
@@ -71,8 +77,10 @@ create table public.personal_records (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references public.profiles(id) on delete cascade,
   exercise_id uuid not null references public.exercises(id) on delete cascade,
-  weight numeric not null,
-  repetitions integer not null,
+  weight numeric not null
+  check (weight >= 0),
+  repetitions integer not null
+  check (repetitions >= 0),
   achieved_at timestamptz not null default now(),
   created_at timestamptz not null default now()
 );
@@ -117,41 +125,257 @@ create policy "workouts_update_own" on public.workouts for update using (auth.ui
 create policy "workouts_delete_own" on public.workouts for delete using (auth.uid() = user_id);
 
 -- WORKOUT_EXERCISES policies
-create policy "we_select_own" on public.workout_exercises for select using (auth.uid() = user_id);
-create policy "we_insert_own" on public.workout_exercises for insert with check (auth.uid() = user_id);
-create policy "we_update_own" on public.workout_exercises for update using (auth.uid() = user_id);
-create policy "we_delete_own" on public.workout_exercises for delete using (auth.uid() = user_id);
+
+create policy "we_select_own"
+on public.workout_exercises
+for select
+using (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.workouts w
+    where w.id = workout_exercises.workout_id
+      and w.user_id = auth.uid()
+  )
+  and exists (
+    select 1
+    from public.exercises e
+    where e.id = workout_exercises.exercise_id
+      and e.user_id = auth.uid()
+  )
+);
+
+create policy "we_insert_own"
+on public.workout_exercises
+for insert
+with check (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.workouts w
+    where w.id = workout_id
+      and w.user_id = auth.uid()
+  )
+  and exists (
+    select 1
+    from public.exercises e
+    where e.id = exercise_id
+      and e.user_id = auth.uid()
+  )
+);
+
+create policy "we_update_own"
+on public.workout_exercises
+for update
+using (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.workouts w
+    where w.id = workout_exercises.workout_id
+      and w.user_id = auth.uid()
+  )
+  and exists (
+    select 1
+    from public.exercises e
+    where e.id = workout_exercises.exercise_id
+      and e.user_id = auth.uid()
+  )
+)
+with check (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.workouts w
+    where w.id = workout_id
+      and w.user_id = auth.uid()
+  )
+  and exists (
+    select 1
+    from public.exercises e
+    where e.id = exercise_id
+      and e.user_id = auth.uid()
+  )
+);
+
+create policy "we_delete_own"
+on public.workout_exercises
+for delete
+using (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.workouts w
+    where w.id = workout_exercises.workout_id
+      and w.user_id = auth.uid()
+  )
+  and exists (
+    select 1
+    from public.exercises e
+    where e.id = workout_exercises.exercise_id
+      and e.user_id = auth.uid()
+  )
+);
 
 -- SETS policies
-create policy "sets_select_own" on public.sets for select using (auth.uid() = user_id);
-create policy "sets_insert_own" on public.sets for insert with check (auth.uid() = user_id);
-create policy "sets_update_own" on public.sets for update using (auth.uid() = user_id);
-create policy "sets_delete_own" on public.sets for delete using (auth.uid() = user_id);
+
+create policy "sets_select_own"
+on public.sets
+for select
+using (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.workout_exercises we
+    where we.id = sets.workout_exercise_id
+      and we.user_id = auth.uid()
+  )
+);
+
+create policy "sets_insert_own"
+on public.sets
+for insert
+with check (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.workout_exercises we
+    where we.id = workout_exercise_id
+      and we.user_id = auth.uid()
+  )
+);
+
+create policy "sets_update_own"
+on public.sets
+for update
+using (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.workout_exercises we
+    where we.id = sets.workout_exercise_id
+      and we.user_id = auth.uid()
+  )
+)
+with check (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.workout_exercises we
+    where we.id = workout_exercise_id
+      and we.user_id = auth.uid()
+  )
+);
+
+create policy "sets_delete_own"
+on public.sets
+for delete
+using (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.workout_exercises we
+    where we.id = sets.workout_exercise_id
+      and we.user_id = auth.uid()
+  )
+);
 
 -- PERSONAL_RECORDS policies
-create policy "pr_select_own" on public.personal_records for select using (auth.uid() = user_id);
-create policy "pr_insert_own" on public.personal_records for insert with check (auth.uid() = user_id);
-create policy "pr_update_own" on public.personal_records for update using (auth.uid() = user_id);
-create policy "pr_delete_own" on public.personal_records for delete using (auth.uid() = user_id);
+
+create policy "pr_select_own"
+on public.personal_records
+for select
+using (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.exercises e
+    where e.id = personal_records.exercise_id
+      and e.user_id = auth.uid()
+  )
+);
+
+create policy "pr_insert_own"
+on public.personal_records
+for insert
+with check (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.exercises e
+    where e.id = exercise_id
+      and e.user_id = auth.uid()
+  )
+);
+
+create policy "pr_update_own"
+on public.personal_records
+for update
+using (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.exercises e
+    where e.id = personal_records.exercise_id
+      and e.user_id = auth.uid()
+  )
+)
+with check (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.exercises e
+    where e.id = exercise_id
+      and e.user_id = auth.uid()
+  )
+);
+
+create policy "pr_delete_own"
+on public.personal_records
+for delete
+using (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.exercises e
+    where e.id = personal_records.exercise_id
+      and e.user_id = auth.uid()
+  )
+);
 
 -- ============================================================
 -- TRIGGER: création automatique du profil à l'inscription
 -- ============================================================
 create or replace function public.handle_new_user()
-returns trigger as $$
+returns trigger
+as $$
 begin
-  insert into public.profiles (id, email, username, first_name, language, theme)
+  insert into public.profiles (
+    id,
+    email,
+    username,
+    first_name,
+    language,
+    theme
+  )
   values (
     new.id,
     new.email,
-    coalesce(new.raw_user_meta_data->>'username', split_part(new.email, '@', 1)),
+    coalesce(
+      new.raw_user_meta_data->>'username',
+      split_part(new.email, '@', 1)
+    ),
     coalesce(new.raw_user_meta_data->>'first_name', ''),
     'fr',
     'dark'
   );
+
   return new;
 end;
-$$ language plpgsql security definer;
+$$
+language plpgsql
+security definer
+set search_path = public, pg_temp;
 
 create trigger on_auth_user_created
   after insert on auth.users
@@ -175,35 +399,106 @@ create trigger trg_profiles_updated_at
 -- ============================================================
 -- FONCTION: calcul et mise à jour du volume total d'une séance
 -- ============================================================
-create or replace function public.recalculate_workout_volume(p_workout_id uuid)
-returns void as $$
+create or replace function public.recalculate_workout_volume(
+  p_workout_id uuid
+)
+returns void
+as $$
 begin
   update public.workouts w
   set total_volume = coalesce((
     select sum(s.weight * s.repetitions)
     from public.sets s
-    join public.workout_exercises we on we.id = s.workout_exercise_id
+    join public.workout_exercises we
+      on we.id = s.workout_exercise_id
     where we.workout_id = p_workout_id
   ), 0)
   where w.id = p_workout_id;
 end;
-$$ language plpgsql security definer;
+$$
+language plpgsql
+security definer
+set search_path = public, pg_temp;
 
 -- Trigger pour recalculer le volume automatiquement après modif des sets
 create or replace function public.trg_recalc_volume()
-returns trigger as $$
+returns trigger
+as $$
 declare
-  v_workout_id uuid;
+  v_old_workout_id uuid;
+  v_new_workout_id uuid;
 begin
-  select workout_id into v_workout_id
-  from public.workout_exercises
-  where id = coalesce(new.workout_exercise_id, old.workout_exercise_id);
 
-  perform public.recalculate_workout_volume(v_workout_id);
+  -- INSERT
+  if tg_op = 'INSERT' then
+
+    select workout_id
+      into v_new_workout_id
+    from public.workout_exercises
+    where id = new.workout_exercise_id;
+
+    if v_new_workout_id is not null then
+      perform public.recalculate_workout_volume(v_new_workout_id);
+    end if;
+
+  -- DELETE
+  elsif tg_op = 'DELETE' then
+
+    select workout_id
+      into v_old_workout_id
+    from public.workout_exercises
+    where id = old.workout_exercise_id;
+
+    if v_old_workout_id is not null then
+      perform public.recalculate_workout_volume(v_old_workout_id);
+    end if;
+
+  -- UPDATE
+  elsif tg_op = 'UPDATE' then
+
+    select workout_id
+      into v_old_workout_id
+    from public.workout_exercises
+    where id = old.workout_exercise_id;
+
+    select workout_id
+      into v_new_workout_id
+    from public.workout_exercises
+    where id = new.workout_exercise_id;
+
+    if v_old_workout_id is not null then
+      perform public.recalculate_workout_volume(v_old_workout_id);
+    end if;
+
+    if v_new_workout_id is not null
+       and v_new_workout_id is distinct from v_old_workout_id then
+      perform public.recalculate_workout_volume(v_new_workout_id);
+    end if;
+
+  end if;
+
   return null;
 end;
-$$ language plpgsql security definer;
+$$
+language plpgsql
+security definer
+set search_path = public, pg_temp;
 
 create trigger trg_sets_volume_recalc
   after insert or update or delete on public.sets
   for each row execute procedure public.trg_recalc_volume();
+
+-- ============================================================
+-- SÉCURITÉ : fonctions SECURITY DEFINER
+-- ============================================================
+
+revoke execute on function public.handle_new_user()
+  from public;
+
+revoke execute on function public.recalculate_workout_volume(uuid)
+  from public;
+
+revoke execute on function public.trg_recalc_volume()
+  from public;
+revoke execute on function public.set_updated_at()
+  from public;

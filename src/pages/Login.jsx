@@ -46,11 +46,21 @@ export default function Login() {
   };
 
   const handleForgotPassword = async () => {
+    setError("");
+    setResetMsg("");
+
     if (!email) {
       setError(t("auth.errors.required"));
       return;
     }
-    await resetPassword(email);
+
+    const { error: err } = await resetPassword(email);
+
+    if (err) {
+      setError(t("auth.errors.generic"));
+      return;
+    }
+
     setResetMsg(t("auth.resetSent"));
   };
 

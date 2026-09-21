@@ -58,7 +58,7 @@ export default function Dashboard() {
        * Nombre d'exercices différents réalisés.
        *
        * On récupère les exercise_id liés aux séances terminées,
-       * puis on utilise un Set pour éliminer les doublons.
+       * et un Set pour éliminer les doublons.
        */
       let exerciseCount = 0;
 
