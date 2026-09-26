@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 function parseDate(value) {
   if (!value) return null;
@@ -80,9 +81,11 @@ export default function DatePicker({
   value,
   onChange,
   min,
-  placeholder = "JJ/MM/AAAA",
+  placeholder,
   disabled = false,
 }) {
+  const { language, t } = useLanguage();
+
   const containerRef = useRef(null);
 
   const selectedDate = parseDate(value);
@@ -120,9 +123,20 @@ export default function DatePicker({
     visibleDate.getMonth(),
   );
 
-  const monthLabel = visibleDate.toLocaleDateString("fr-FR", {
+  const monthLabel = visibleDate.toLocaleDateString(language, {
     month: "long",
     year: "numeric",
+  });
+
+  const weekDays = Array.from({ length: 7 }, (_, index) => {
+    const date = new Date(2024, 0, 1 + index);
+
+    return new Intl.DateTimeFormat(language, {
+      weekday: "short",
+    })
+      .format(date)
+      .charAt(0)
+      .toUpperCase();
   });
 
   const today = new Date();
@@ -175,7 +189,9 @@ export default function DatePicker({
           </svg>
 
           <span className={value ? "text-primary" : "text-secondary"}>
-            {selectedDate ? formatInputDate(selectedDate) : placeholder}
+            {selectedDate
+              ? formatInputDate(selectedDate)
+              : placeholder || t("datePicker.placeholder")}
           </span>
         </span>
 
@@ -196,7 +212,7 @@ export default function DatePicker({
       {open && (
         <div
           role="dialog"
-          aria-label="Sélectionner une date"
+          aria-label={t("datePicker.selectDate")}
           className="absolute z-50 mt-2 w-[320px] max-w-[calc(100vw-2rem)] rounded-xl border border-app bg-[#111016] p-4 shadow-2xl"
         >
           <div className="flex items-center justify-between mb-4">
@@ -204,7 +220,7 @@ export default function DatePicker({
               type="button"
               onClick={goToPreviousMonth}
               className="w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:text-primary hover:bg-accent/10 transition-colors"
-              aria-label="Mois précédent"
+              aria-label={t("datePicker.previousMonth")}
             >
               ←
             </button>
@@ -217,14 +233,14 @@ export default function DatePicker({
               type="button"
               onClick={goToNextMonth}
               className="w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:text-primary hover:bg-accent/10 transition-colors"
-              aria-label="Mois suivant"
+              aria-label={t("datePicker.nextMonth")}
             >
               →
             </button>
           </div>
 
           <div className="grid grid-cols-7 mb-2">
-            {["L", "M", "M", "J", "V", "S", "D"].map((day, index) => (
+            {weekDays.map((day, index) => (
               <div
                 key={`${day}-${index}`}
                 className="h-8 flex items-center justify-center text-[11px] font-medium text-secondary"
@@ -271,12 +287,12 @@ export default function DatePicker({
           <div className="mt-4 pt-3 border-t border-app flex items-center gap-4 text-[11px] text-secondary">
             <span className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-accent" />
-              Date sélectionnée
+              {t("datePicker.selectedDate")}
             </span>
 
             <span className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full border border-accent" />
-              Aujourd'hui
+              {t("datePicker.today")}
             </span>
           </div>
         </div>
