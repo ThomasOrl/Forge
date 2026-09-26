@@ -8,32 +8,32 @@ const navItems = [
   {
     to: "/",
     labelKey: "nav.home",
-    icon: "/home.png",
+    icon: "/ForgeIcons/Home.png",
   },
   {
     to: "/workout",
     labelKey: "nav.workout",
-    icon: "/workout.png",
+    icon: "/ForgeIcons/Exercices.png",
   },
   {
     to: "/exercises",
     labelKey: "nav.exercises",
-    icon: "/add.png",
+    icon: "/ForgeIcons/Entrainement.png",
   },
   {
     to: "/history",
     labelKey: "nav.history",
-    icon: "/history.png",
+    icon: "/ForgeIcons/Historique.png",
   },
   {
     to: "/progress",
     labelKey: "nav.progress",
-    icon: "/progress.png",
+    icon: "/ForgeIcons/Progression.png",
   },
   {
     to: "/cycle",
     labelKey: "nav.cycle",
-    icon: "/favorites.png",
+    icon: "/ForgeIcons/cycle.png",
   },
 ];
 
@@ -41,12 +41,12 @@ const secondaryNavItems = [
   {
     to: "/profile",
     labelKey: "nav.profile",
-    icon: "/profile.png",
+    icon: "/ForgeIcons/Profile.png",
   },
   {
     to: "/settings",
     labelKey: "nav.settings",
-    icon: "/settings.png",
+    icon: "/ForgeIcons/Parametres.png",
   },
 ];
 
@@ -68,7 +68,7 @@ export default function Sidebar() {
         <img
           src="/logo-simple.png"
           alt="Forge"
-          className="w-10 h-10 object-contain"
+          className="w-12 h-12 object-contain"
         />
 
         <span className="font-extrabold text-primary tracking-tight">
@@ -90,7 +90,7 @@ export default function Sidebar() {
               <img
                 src={item.icon}
                 alt=""
-                className="w-6 h-6 object-contain flex-shrink-0"
+                className="w-10 h-10 object-contain flex-shrink-0"
               />
 
               <span>{t(item.labelKey)}</span>
@@ -108,7 +108,7 @@ export default function Sidebar() {
             <img
               src={item.icon}
               alt=""
-              className="w-6 h-6 object-contain flex-shrink-0"
+              className="w-10 h-10 object-contain flex-shrink-0"
             />
 
             <span>{t(item.labelKey)}</span>

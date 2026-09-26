@@ -170,6 +170,9 @@ export const translations = {
       endDateNotProvided: "Fin non renseignée",
       until: "jusqu'au",
       save: "Enregistrer le cycle",
+      day: "Jour",
+      of: "sur",
+      phaseDays: "Jours",
       addDescription:
         "Ajoutez les dates de début et de fin de vos règles pour suivre votre cycle.",
       endDateHint:
@@ -403,6 +406,9 @@ export const translations = {
       endDateNotProvided: "End date not provided",
       until: "until",
       save: "Save cycle",
+      day: "Day",
+      of: "of",
+      phaseDays: "Days",
       addDescription:
         "Add the start and end dates of your period to track your cycle.",
       endDateHint:
@@ -637,6 +643,9 @@ export const translations = {
       endDateNotProvided: "Fecha de finalización no indicada",
       until: "hasta",
       save: "Guardar ciclo",
+      day: "Día",
+      of: "de",
+      phaseDays: "Días",
       addDescription:
         "Añade las fechas de inicio y fin de tu menstruación para seguir tu ciclo.",
       endDateHint:

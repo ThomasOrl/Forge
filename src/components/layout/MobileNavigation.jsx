@@ -6,31 +6,31 @@ const items = [
   {
     to: "/",
     key: "home",
-    icon: "/home.png",
+    icon: "/ForgeIcons/Home.png",
     labelKey: "nav.home",
   },
   {
     to: "/workout",
     key: "workout",
-    icon: "/workout.png",
+    icon: "/ForgeIcons/Exercices.png",
     labelKey: "nav.workout",
   },
   {
     to: "/history",
     key: "history",
-    icon: "/history.png",
+    icon: "/ForgeIcons/Historique.png",
     labelKey: "nav.history",
   },
   {
     to: "/cycle",
     key: "cycle",
-    icon: "/favorites.png",
+    icon: "/ForgeIcons/cycle.png",
     labelKey: "nav.cycle",
   },
   {
     to: "/profile",
     key: "profile",
-    icon: "/profile.png",
+    icon: "/ForgeIcons/Profile.png",
     labelKey: "nav.profile",
   },
 ];
@@ -54,7 +54,7 @@ export default function MobileNavigation() {
               }`
             }
           >
-            <img src={item.icon} alt="" className="w-6 h-6 object-contain" />
+            <img src={item.icon} alt="" className="w-10 h-10 object-contain" />
 
             <span>{t(item.labelKey)}</span>
           </NavLink>

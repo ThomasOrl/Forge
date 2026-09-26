@@ -122,7 +122,7 @@ function TrashIcon() {
   );
 }
 
-function CycleProgress({ cycleDay, cycleLength }) {
+function CycleProgress({ cycleDay, cycleLength, t }) {
   const safeCycleLength = cycleLength || 28;
 
   const progress = Math.min(
@@ -144,14 +144,14 @@ function CycleProgress({ cycleDay, cycleLength }) {
       }}
     >
       <div className="absolute inset-[7px] rounded-full bg-[#101012] flex flex-col items-center justify-center">
-        <span className="text-xs text-secondary">Jour</span>
+        <span className="text-xs text-secondary">{t("cycle.day")}</span>
 
         <span className="text-3xl sm:text-4xl font-bold text-primary leading-none mt-1">
           {cycleDay}
         </span>
 
         <span className="text-xs text-secondary mt-1">
-          sur {safeCycleLength}
+          {t("cycle.of")} {safeCycleLength}
         </span>
       </div>
     </div>
@@ -173,37 +173,40 @@ function PhaseTimeline({ cycleDay, cycleLength, periodEndDay, t }) {
     {
       key: "menstrual",
       label: t("cycle.phases.menstrual"),
-      range: `Jours 1–${periodEndDay}`,
+      range: `${t("cycle.phaseDays")} 1–${periodEndDay}`,
       start: 1,
       end: periodEndDay,
       className: "bg-pink-400/70",
+      icon: "🩸",
     },
     {
       key: "follicular",
       label: t("cycle.phases.follicular"),
-      range: `Jours ${periodEndDay + 1}–${follicularEnd}`,
+      range: `${t("cycle.phaseDays")} ${periodEndDay + 1}–${follicularEnd}`,
       start: periodEndDay + 1,
       end: follicularEnd,
       className: "bg-accent/70",
+      icon: "🌸",
     },
     {
       key: "ovulation",
       label: t("cycle.phases.ovulation"),
-      range: `Jours ${ovulationStart}–${ovulationEnd}`,
+      range: `${t("cycle.phaseDays")} ${ovulationStart}–${ovulationEnd}`,
       start: ovulationStart,
       end: ovulationEnd,
       className: "bg-violet-300/80",
+      icon: "✨",
     },
     {
       key: "luteal",
       label: t("cycle.phases.luteal"),
-      range: `Jours ${lutealStart}–${safeCycleLength}`,
+      range: `${t("cycle.phaseDays")} ${lutealStart}–${safeCycleLength}`,
       start: lutealStart,
       end: safeCycleLength,
       className: "bg-purple-400/60",
+      icon: "🌙",
     },
   ];
-
   const markerPosition =
     safeCycleLength > 1
       ? ((Math.min(cycleDay, safeCycleLength) - 1) / (safeCycleLength - 1)) *
@@ -240,7 +243,7 @@ function PhaseTimeline({ cycleDay, cycleLength, periodEndDay, t }) {
         {phases.map((phase) => (
           <div key={phase.key} className="min-w-0">
             <p className="text-xs font-medium text-primary truncate">
-              {phase.label}
+              {phase.label} <span className="text-sm">{phase.icon}</span>
             </p>
 
             <p className="text-[10px] sm:text-xs text-secondary mt-1">
@@ -552,6 +555,7 @@ export default function Cycle() {
                   <CycleProgress
                     cycleDay={cycleStatus.cycleDay}
                     cycleLength={cycleStatus.averageCycleLength || 28}
+                    t={t}
                   />
 
                   <div className="flex-1 min-w-0">
