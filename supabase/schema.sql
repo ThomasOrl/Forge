@@ -1,6 +1,5 @@
 -- ============================================================
 -- Forge — SCHEMA SUPABASE COMPLET
--- À exécuter dans l'éditeur SQL de votre projet Supabase
 -- ============================================================
 
 -- 1. PROFILES (lié à auth.users)
@@ -84,6 +83,43 @@ create table public.personal_records (
   achieved_at timestamptz not null default now(),
   created_at timestamptz not null default now()
 );
+-- 7. MENSTRUAL CYCLES
+create table public.menstrual_cycles (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references public.profiles(id) on delete cascade,
+  start_date date not null,
+  end_date date,
+  created_at timestamptz not null default now(),
+
+  constraint menstrual_cycles_valid_dates
+    check (end_date is null or end_date >= start_date)
+);
+
+create index idx_menstrual_cycles_user_date
+  on public.menstrual_cycles(user_id, start_date desc);
+
+alter table public.menstrual_cycles enable row level security;
+
+create policy "Users can view their own menstrual cycles"
+  on public.menstrual_cycles
+  for select
+  using (auth.uid() = user_id);
+
+create policy "Users can insert their own menstrual cycles"
+  on public.menstrual_cycles
+  for insert
+  with check (auth.uid() = user_id);
+
+create policy "Users can update their own menstrual cycles"
+  on public.menstrual_cycles
+  for update
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
+create policy "Users can delete their own menstrual cycles"
+  on public.menstrual_cycles
+  for delete
+  using (auth.uid() = user_id);
 
 -- ============================================================
 -- INDEXES

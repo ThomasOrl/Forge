@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
   const fetchProfile = useCallback(async (userId) => {
     const { data, error } = await supabase
       .from("profiles")
-      .select("*")
+      .select("id, email, username, first_name, avatar_url, created_at, sex")
       .eq("id", userId)
       .single();
     if (!error) setProfile(data);
@@ -27,29 +27,45 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     let mounted = true;
 
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      if (!mounted) return;
-      setUser(session?.user ?? null);
-      if (session?.user) await fetchProfile(session.user.id);
-      setLoading(false);
-    });
-
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!mounted) return;
+
       setUser(session?.user ?? null);
-      if (session?.user) {
-        await fetchProfile(session.user.id);
-      } else {
-        setProfile(null);
-      }
+    });
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!mounted) return;
+
+      setUser(session?.user ?? null);
+      setLoading(false);
     });
 
     return () => {
       mounted = false;
       subscription.unsubscribe();
     };
-  }, [fetchProfile]);
+  }, []);
+
+  useEffect(() => {
+    let mounted = true;
+
+    if (!user) {
+      setProfile(null);
+      return;
+    }
+
+    fetchProfile(user.id).then((data) => {
+      if (mounted) {
+        setProfile(data);
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, [user, fetchProfile]);
 
   const signUp = useCallback(
     async ({ email, password, username, firstName }) => {

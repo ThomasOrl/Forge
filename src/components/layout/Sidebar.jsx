@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { useAuth } from "../../contexts/AuthContext";
 import LanguageSelector from "../ui/LanguageSelector";
 import ThemeToggle from "../ui/ThemeToggle";
 
@@ -29,6 +30,11 @@ const navItems = [
     labelKey: "nav.progress",
     icon: "/progress.png",
   },
+  {
+    to: "/cycle",
+    labelKey: "nav.cycle",
+    icon: "/favorites.png",
+  },
 ];
 
 const secondaryNavItems = [
@@ -46,6 +52,7 @@ const secondaryNavItems = [
 
 export default function Sidebar() {
   const { t } = useLanguage();
+  const { profile } = useAuth();
 
   const linkClass = ({ isActive }) =>
     `flex items-center gap-3 px-4 py-2.5 rounded-btn text-sm font-medium transition-all duration-200 ${
@@ -71,22 +78,24 @@ export default function Sidebar() {
 
       {/* Navigation principale */}
       <nav className="flex flex-col gap-1">
-        {navItems.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            className={linkClass}
-            end={item.to === "/"}
-          >
-            <img
-              src={item.icon}
-              alt=""
-              className="w-6 h-6 object-contain flex-shrink-0"
-            />
+        {navItems
+          .filter((item) => item.to !== "/cycle" || profile?.sex === "female")
+          .map((item) => (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={linkClass}
+              end={item.to === "/"}
+            >
+              <img
+                src={item.icon}
+                alt=""
+                className="w-6 h-6 object-contain flex-shrink-0"
+              />
 
-            <span>{t(item.labelKey)}</span>
-          </NavLink>
-        ))}
+              <span>{t(item.labelKey)}</span>
+            </NavLink>
+          ))}
       </nav>
 
       {/* Séparateur */}

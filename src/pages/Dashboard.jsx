@@ -31,19 +31,16 @@ export default function Dashboard() {
       setLoading(true);
 
       // Séances terminées
-      const { data: workouts } = await supabase
-        .from("workouts")
-        .select("id, name, date, total_volume")
-        .eq("user_id", user.id)
-        .eq("status", "completed")
-        .order("date", { ascending: false });
+      const [{ data: workouts }, { data: sets }] = await Promise.all([
+        supabase
+          .from("workouts")
+          .select("id, name, date, total_volume")
+          .eq("user_id", user.id)
+          .eq("status", "completed")
+          .order("date", { ascending: false }),
 
-      // Toutes les séries de l'utilisateur
-      const { data: sets } = await supabase
-        .from("sets")
-        .select("weight, repetitions, workout_exercise_id")
-        .eq("user_id", user.id);
-
+        supabase.from("sets").select("weight").eq("user_id", user.id),
+      ]);
       if (!mounted) return;
 
       const workoutCount = workouts?.length || 0;
