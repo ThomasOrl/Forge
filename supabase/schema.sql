@@ -9,7 +9,7 @@ create table public.profiles (
   username text not null,
   first_name text,
   avatar_url text,
-  language text not null default 'fr' check (language in ('fr','en','es')),
+  language text not null default 'fr' check (language in ('fr','en','es','it')),
   theme text not null default 'dark' check (theme in ('dark','light','system')),
   is_demo boolean not null default false,
   created_at timestamptz not null default now(),
@@ -538,3 +538,57 @@ revoke execute on function public.trg_recalc_volume()
   from public;
 revoke execute on function public.set_updated_at()
   from public;
+
+-- ============================================================
+-- STORAGE : avatars
+-- Le bucket est public pour afficher les URL d'avatar dans l'application.
+-- Les écritures et remplacements restent limités au dossier de l'utilisateur.
+-- ============================================================
+
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'avatars',
+  'avatars',
+  true,
+  5242880,
+  array['image/jpeg', 'image/png', 'image/webp']
+)
+on conflict (id) do update
+set
+  public = excluded.public,
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
+
+drop policy if exists "avatars_read_own" on storage.objects;
+create policy "avatars_read_own"
+on storage.objects
+for select
+to authenticated
+using (
+  bucket_id = 'avatars'
+  and (storage.foldername(name))[1] = (select auth.uid())::text
+);
+
+drop policy if exists "avatars_insert_own" on storage.objects;
+create policy "avatars_insert_own"
+on storage.objects
+for insert
+to authenticated
+with check (
+  bucket_id = 'avatars'
+  and (storage.foldername(name))[1] = (select auth.uid())::text
+);
+
+drop policy if exists "avatars_update_own" on storage.objects;
+create policy "avatars_update_own"
+on storage.objects
+for update
+to authenticated
+using (
+  bucket_id = 'avatars'
+  and (storage.foldername(name))[1] = (select auth.uid())::text
+)
+with check (
+  bucket_id = 'avatars'
+  and (storage.foldername(name))[1] = (select auth.uid())::text
+);

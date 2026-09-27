@@ -160,6 +160,21 @@ export const translations = {
       personalRecords: "Records personnels",
       selectExercise: "Sélectionner un exercice",
       noData: "Pas encore assez de données pour afficher ce graphique.",
+      cleanupTitle: "Nettoyer l’historique",
+      cleanupDescription:
+        "Supprime les séances terminées avant la semaine dernière. La semaine dernière et la semaine en cours seront conservées.",
+      cleanupButton: "Supprimer les anciennes séances",
+      cleanupDialogTitle: "Confirmer la suppression des anciennes séances",
+      cleanupLoading: "Recherche des séances à supprimer…",
+      cleanupEmpty: "Aucune séance terminée ne doit être supprimée.",
+      cleanupDialogDescription:
+        "Les {count} séances terminées avant le {date}, ainsi que leurs séries et détails, seront définitivement supprimées. Les exercices de ta bibliothèque seront conservés.",
+      cleanupConfirmationPrompt: "Pour confirmer, saisis :",
+      cleanupConfirmationWord: "SUPPRIMER",
+      cleanupConfirmButton: "Supprimer les séances",
+      cleanupError:
+        "Impossible de supprimer les anciennes séances. Réessaie dans quelques instants.",
+      cleanupSuccess: "Les anciennes séances ont été supprimées.",
     },
     cycle: {
       title: "Mon cycle",
@@ -458,6 +473,21 @@ export const translations = {
       personalRecords: "Personal records",
       selectExercise: "Select an exercise",
       noData: "Not enough data yet to display this chart.",
+      cleanupTitle: "Clean up workout history",
+      cleanupDescription:
+        "Delete completed workouts from before last week. Workouts from last week and this week will be kept.",
+      cleanupButton: "Delete older workouts",
+      cleanupDialogTitle: "Confirm deletion of older workouts",
+      cleanupLoading: "Checking which workouts can be deleted…",
+      cleanupEmpty: "There are no completed workouts to delete.",
+      cleanupDialogDescription:
+        "The {count} completed workouts before {date}, including their sets and details, will be permanently deleted. Your exercise library will be kept.",
+      cleanupConfirmationPrompt: "To confirm, type:",
+      cleanupConfirmationWord: "DELETE",
+      cleanupConfirmButton: "Delete workouts",
+      cleanupError:
+        "Older workouts could not be deleted. Please try again shortly.",
+      cleanupSuccess: "Older workouts have been deleted.",
     },
     cycle: {
       title: "My cycle",
@@ -758,6 +788,21 @@ export const translations = {
       selectExercise: "Seleziona un esercizio",
       noData:
         "Non ci sono ancora dati sufficienti per visualizzare questo grafico.",
+      cleanupTitle: "Pulisci la cronologia",
+      cleanupDescription:
+        "Elimina gli allenamenti completati prima della settimana scorsa. Gli allenamenti della settimana scorsa e di quella in corso saranno conservati.",
+      cleanupButton: "Elimina gli allenamenti meno recenti",
+      cleanupDialogTitle: "Conferma l’eliminazione degli allenamenti meno recenti",
+      cleanupLoading: "Controllo degli allenamenti da eliminare…",
+      cleanupEmpty: "Non ci sono allenamenti completati da eliminare.",
+      cleanupDialogDescription:
+        "I {count} allenamenti completati prima del {date}, con le relative serie e i dettagli, saranno eliminati definitivamente. La tua libreria di esercizi sarà conservata.",
+      cleanupConfirmationPrompt: "Per confermare, digita:",
+      cleanupConfirmationWord: "ELIMINA",
+      cleanupConfirmButton: "Elimina gli allenamenti",
+      cleanupError:
+        "Impossibile eliminare gli allenamenti meno recenti. Riprova tra poco.",
+      cleanupSuccess: "Gli allenamenti meno recenti sono stati eliminati.",
     },
     cycle: {
       title: "Il mio ciclo",
@@ -1060,6 +1105,21 @@ export const translations = {
       personalRecords: "Récords personales",
       selectExercise: "Selecciona un ejercicio",
       noData: "Aún no hay suficientes datos para mostrar este gráfico.",
+      cleanupTitle: "Limpiar el historial",
+      cleanupDescription:
+        "Elimina los entrenamientos completados anteriores a la semana pasada. Se conservarán los de la semana pasada y los de esta semana.",
+      cleanupButton: "Eliminar entrenamientos antiguos",
+      cleanupDialogTitle: "Confirmar la eliminación de entrenamientos antiguos",
+      cleanupLoading: "Buscando entrenamientos que se pueden eliminar…",
+      cleanupEmpty: "No hay entrenamientos completados que eliminar.",
+      cleanupDialogDescription:
+        "Los {count} entrenamientos completados anteriores al {date}, incluidas sus series y detalles, se eliminarán definitivamente. Tu biblioteca de ejercicios se conservará.",
+      cleanupConfirmationPrompt: "Para confirmar, escribe:",
+      cleanupConfirmationWord: "ELIMINAR",
+      cleanupConfirmButton: "Eliminar entrenamientos",
+      cleanupError:
+        "No se pudieron eliminar los entrenamientos antiguos. Inténtalo de nuevo en unos instantes.",
+      cleanupSuccess: "Se eliminaron los entrenamientos antiguos.",
     },
     cycle: {
       title: "Mi ciclo",

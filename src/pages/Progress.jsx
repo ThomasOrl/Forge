@@ -6,6 +6,9 @@ import { useExercises } from "../hooks/useExercises";
 import ProgressChart from "../components/charts/ProgressChart";
 import StatCard from "../components/ui/StatCard";
 import PageTitle from "../components/ui/PageTitle";
+import Button from "../components/ui/Button";
+import Input from "../components/ui/Input";
+import Modal from "../components/ui/Modal";
 import { formatVolume, localeFromLang } from "../utils/calculations";
 
 export default function Progress() {
@@ -19,6 +22,19 @@ export default function Progress() {
   const [exerciseSets, setExerciseSets] = useState([]);
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshVersion, setRefreshVersion] = useState(0);
+  const [cleanupOpen, setCleanupOpen] = useState(false);
+  const [cleanupLoading, setCleanupLoading] = useState(false);
+  const [cleanupCount, setCleanupCount] = useState(null);
+  const [cleanupConfirmation, setCleanupConfirmation] = useState("");
+  const [cleanupError, setCleanupError] = useState("");
+  const [cleaning, setCleaning] = useState(false);
+  const [cleanupSucceeded, setCleanupSucceeded] = useState(false);
+  const cleanupBeforeDate = useMemo(getPreviousWeekStart, []);
+  const cleanupBeforeLabel = new Date(`${cleanupBeforeDate}T00:00:00`).toLocaleDateString(
+    localeFromLang(language),
+    { day: "numeric", month: "long", year: "numeric" },
+  );
 
   useEffect(() => {
     if (!user) return;
@@ -64,7 +80,7 @@ export default function Progress() {
     return () => {
       mounted = false;
     };
-  }, [user]);
+  }, [user, refreshVersion]);
 
   useEffect(() => {
     if (!selectedExerciseId || !user) {
@@ -127,7 +143,60 @@ export default function Progress() {
     return () => {
       mounted = false;
     };
-  }, [selectedExerciseId, user, language, exercises]);
+  }, [selectedExerciseId, user, language, exercises, refreshVersion]);
+
+  const handleOpenCleanup = async () => {
+    setCleanupOpen(true);
+    setCleanupLoading(true);
+    setCleanupCount(null);
+    setCleanupConfirmation("");
+    setCleanupError("");
+
+    const { count, error } = await supabase
+      .from("workouts")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .eq("status", "completed")
+      .lt("date", cleanupBeforeDate);
+
+    if (error) {
+      setCleanupError(t("progress.cleanupError"));
+    } else {
+      setCleanupCount(count || 0);
+    }
+
+    setCleanupLoading(false);
+  };
+
+  const handleCleanup = async () => {
+    if (!user || cleaning || cleanupCount < 1) return;
+
+    setCleaning(true);
+    setCleanupError("");
+
+    const { error } = await supabase
+      .from("workouts")
+      .delete()
+      .eq("user_id", user.id)
+      .eq("status", "completed")
+      .lt("date", cleanupBeforeDate);
+
+    if (error) {
+      setCleanupError(t("progress.cleanupError"));
+      setCleaning(false);
+      return;
+    }
+
+    setCleanupOpen(false);
+    setCleanupSucceeded(true);
+    setCleanupConfirmation("");
+    setRefreshVersion((version) => version + 1);
+    setCleaning(false);
+  };
+
+  const cleanupConfirmationMatches =
+    cleanupConfirmation.trim().toLocaleUpperCase() ===
+    t("progress.cleanupConfirmationWord").toLocaleUpperCase();
 
   const weeklyVolume = useMemo(() => {
     const map = {};
@@ -262,8 +331,131 @@ export default function Progress() {
           )}
         </div>
       </section>
+
+      <section className="mt-6 rounded-2xl border border-red-500/20 bg-red-500/[0.025] p-5 sm:p-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="font-bold text-red-400">
+              {t("progress.cleanupTitle")}
+            </h2>
+            <p className="mt-1 max-w-2xl text-sm text-secondary">
+              {t("progress.cleanupDescription")}
+            </p>
+            {cleanupSucceeded && (
+              <p className="mt-2 text-sm text-green-400" role="status">
+                {t("progress.cleanupSuccess")}
+              </p>
+            )}
+          </div>
+          <Button
+            variant="danger"
+            onClick={handleOpenCleanup}
+            disabled={!user}
+            className="shrink-0 self-start sm:self-auto"
+          >
+            {t("progress.cleanupButton")}
+          </Button>
+        </div>
+      </section>
+
+      <Modal
+        open={cleanupOpen}
+        onClose={() => {
+          if (cleaning) return;
+          setCleanupOpen(false);
+          setCleanupConfirmation("");
+          setCleanupError("");
+        }}
+        title={t("progress.cleanupDialogTitle")}
+      >
+        {cleanupLoading ? (
+          <p className="text-sm text-secondary">
+            {t("progress.cleanupLoading")}
+          </p>
+        ) : cleanupError && cleanupCount === null ? (
+          <p className="text-sm text-red-400" role="alert">
+            {cleanupError}
+          </p>
+        ) : cleanupCount === 0 ? (
+          <p className="text-sm text-secondary">
+            {t("progress.cleanupEmpty")}
+          </p>
+        ) : (
+          <>
+            <p className="text-sm leading-relaxed text-secondary">
+              {t("progress.cleanupDialogDescription")
+                .replace("{count}", String(cleanupCount))
+                .replace("{date}", cleanupBeforeLabel)}
+            </p>
+
+            <div className="mt-5 flex flex-col gap-4">
+              <div>
+                <p className="mb-1.5 text-sm font-medium text-secondary">
+                  {t("progress.cleanupConfirmationPrompt")} {" "}
+                  <span className="font-bold tracking-wide text-primary">
+                    {t("progress.cleanupConfirmationWord")}
+                  </span>
+                </p>
+                <Input
+                  value={cleanupConfirmation}
+                  onChange={(event) =>
+                    setCleanupConfirmation(event.target.value)
+                  }
+                  aria-label={t("progress.cleanupConfirmationPrompt")}
+                  autoComplete="off"
+                />
+              </div>
+
+              {cleanupError && (
+                <p className="text-sm text-red-400" role="alert">
+                  {cleanupError}
+                </p>
+              )}
+
+              <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    setCleanupOpen(false);
+                    setCleanupConfirmation("");
+                    setCleanupError("");
+                  }}
+                  disabled={cleaning}
+                >
+                  {t("common.cancel")}
+                </Button>
+                <Button
+                  variant="danger"
+                  onClick={handleCleanup}
+                  disabled={
+                    cleaning ||
+                    !cleanupConfirmationMatches ||
+                    cleanupCount < 1
+                  }
+                >
+                  {cleaning
+                    ? t("common.loading")
+                    : t("progress.cleanupConfirmButton")}
+                </Button>
+              </div>
+            </div>
+          </>
+        )}
+      </Modal>
     </div>
   );
+}
+
+function getPreviousWeekStart() {
+  const date = new Date();
+  const daysSinceMonday = (date.getDay() + 6) % 7;
+  date.setDate(date.getDate() - daysSinceMonday - 7);
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
 }
 
 function ChartSectionHeading({ children }) {
