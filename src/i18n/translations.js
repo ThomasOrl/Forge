@@ -18,6 +18,12 @@ export const translations = {
       workouts: "séances",
       demoTag: "Démo",
     },
+    footer: {
+      author: "Designer",
+      socialLinks: "Réseaux sociaux de Thomas",
+      githubProfile: "Profil GitHub de Thomas (nouvel onglet)",
+      linkedinProfile: "Profil LinkedIn de Thomas (nouvel onglet)",
+    },
     nav: {
       home: "Accueil",
       workout: "Entraînement",
@@ -313,6 +319,12 @@ export const translations = {
       workouts: "workouts",
       demoTag: "Demo",
     },
+    footer: {
+      author: "Designer",
+      socialLinks: "Thomas's social profiles",
+      githubProfile: "Thomas's GitHub profile (opens in a new tab)",
+      linkedinProfile: "Thomas's LinkedIn profile (opens in a new tab)",
+    },
     nav: {
       home: "Home",
       workout: "Workout",
@@ -602,6 +614,12 @@ export const translations = {
       exercises: "esercizi",
       workouts: "allenamenti",
       demoTag: "Demo",
+    },
+    footer: {
+      author: "Designer",
+      socialLinks: "Profili social di Thomas",
+      githubProfile: "Profilo GitHub di Thomas (si apre in una nuova scheda)",
+      linkedinProfile: "Profilo LinkedIn di Thomas (si apre in una nuova scheda)",
     },
     nav: {
       home: "Home",
@@ -900,6 +918,12 @@ export const translations = {
       exercises: "ejercicios",
       workouts: "entrenamientos",
       demoTag: "Demo",
+    },
+    footer: {
+      author: "Diseñador",
+      socialLinks: "Perfiles sociales de Thomas",
+      githubProfile: "Perfil de GitHub de Thomas (se abre en una pestaña nueva)",
+      linkedinProfile: "Perfil de LinkedIn de Thomas (se abre en una pestaña nueva)",
     },
     nav: {
       home: "Inicio",

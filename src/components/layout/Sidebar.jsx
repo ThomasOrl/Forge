@@ -13,12 +13,12 @@ const navItems = [
   {
     to: "/workout",
     labelKey: "nav.workout",
-    icon: "/ForgeIcons/Exercices.png",
+    icon: "/ForgeIcons/Entrainement.png",
   },
   {
     to: "/exercises",
     labelKey: "nav.exercises",
-    icon: "/ForgeIcons/Entrainement.png",
+    icon: "/ForgeIcons/Exercices.png",
   },
   {
     to: "/history",
