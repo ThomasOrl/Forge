@@ -248,7 +248,7 @@ export const translations = {
 
   en: {
     common: {
-      appName: "Forge your Body",
+      appName: "Forge",
       loading: "Loading…",
       save: "Save",
       cancel: "Cancel",
@@ -491,378 +491,211 @@ export const translations = {
   it: {
     common: {
       appName: "Forge",
-
       loading: "Caricamento…",
-
       save: "Salva",
-
       cancel: "Annulla",
-
       delete: "Elimina",
-
       edit: "Modifica",
-
       add: "Aggiungi",
-
       search: "Cerca",
-
       close: "Chiudi",
-
       confirm: "Conferma",
-
       kg: "kg",
-
       reps: "ripetizioni",
-
       sets: "serie",
-
       exercises: "esercizi",
-
       workouts: "allenamenti",
-
       demoTag: "Demo",
     },
-
     nav: {
       home: "Home",
-
       workout: "Allenamento",
-
       exercises: "I miei esercizi",
-
       history: "Cronologia",
-
       progress: "Progressi",
-
       cycle: "Ciclo",
-
       profile: "Profilo",
-
       settings: "Impostazioni",
-
       logout: "Disconnetti",
     },
-
     auth: {
       welcome: "Benvenuto",
-
       loginSubtitle:
         "Accedi per ritrovare i tuoi allenamenti e i tuoi progressi.",
-
       email: "Email",
-
       password: "Password",
-
       confirmPassword: "Conferma password",
-
       login: "Accedi",
-
       forgotPassword: "Hai dimenticato la password?",
-
       noAccount: "Non hai ancora un account?",
-
       createAccount: "Crea un account",
-
       signupTitle: "Crea il tuo account",
-
       signupSubtitle:
         "Inizia a tenere traccia dei tuoi allenamenti già da oggi.",
-
       username: "Nome o nome utente",
-
       createMyAccount: "Crea il mio account",
-
       haveAccount: "Hai già un account?",
-
       errors: {
         invalidEmail: "Indirizzo email non valido.",
-
         emailInUse: "Questo indirizzo email è già utilizzato.",
-
         weakPassword: "La password deve contenere almeno 8 caratteri.",
-
         passwordMismatch: "Le password non corrispondono.",
-
         required: "Questo campo è obbligatorio.",
-
         generic: "Si è verificato un errore. Riprova.",
-
         invalidCredentials: "Email o password non corretti.",
-
         emailNotConfirmed: "Conferma il tuo indirizzo email prima di accedere.",
       },
-
       resetSent: "È stata inviata un'email per reimpostare la password.",
-
       passwordUpdated: "Password aggiornata",
-
       passwordUpdatedMessage:
         "La tua password è stata aggiornata con successo.",
-
       continue: "Continua",
-
       resetPassword: "Reimposta la password",
-
       resetPasswordSubtitle: "Scegli una nuova password per il tuo account.",
-
       updatePassword: "Aggiorna la password",
-
       emailConfirmationTitle: "Verifica il tuo indirizzo email",
-
       emailConfirmationMessage:
         "Il tuo account è stato creato. Ti abbiamo inviato un'email di conferma all'indirizzo:",
-
       emailConfirmationHint:
         "Apri l'email e clicca sul link di conferma prima di accedere a Forge.",
-
       goToLogin: "Vai all'accesso",
     },
-
     dashboard: {
       greeting: "Ciao",
-
       subtitle: "Pronto per il tuo prossimo allenamento?",
-
       nextWorkout: "Prossimo allenamento",
-
       startWorkout: "Inizia allenamento",
-
       stats: "Statistiche",
-
       totalWorkouts: "Allenamenti",
-
       totalVolume: "Volume totale",
-
       exerciseCount: "Esercizi diversi",
-
       totalSets: "Serie",
-
       bestLift: "Peso migliore",
-
       lastWorkout: "Ultimo allenamento",
-
       viewWorkout: "Vedi allenamento",
-
       noNextWorkout: "Nessun allenamento programmato",
     },
-
     workout: {
       newWorkout: "Nuovo allenamento",
-
       workoutName: "Nome dell'allenamento",
-
       workoutNamePlaceholder: "Push — Pettorali / Spalle / Tricipiti",
-
       addExercise: "+ Aggiungi esercizio",
-
       createNewExercise: "+ Crea nuovo esercizio",
-
       addSet: "+ Aggiungi serie",
-
       set: "Serie",
-
       weight: "Peso",
-
       repetitions: "Ripetizioni",
-
       finishWorkout: "Termina allenamento",
-
       workoutCompleted: "Allenamento completato",
-
       summary: "Riepilogo",
-
       duration: "Durata",
-
       newRecord: "Nuovo record",
-
       chooseExercise: "Scegli un esercizio",
-
       myExercises: "I miei esercizi",
-
       startedAt: "Allenamento iniziato",
-
       inProgress: "In corso",
-
       cancelWorkout: "Abbandona allenamento",
-
       completionEyebrow: "Allenamento terminato",
-
       completionTitle: "Congratulazioni!",
-
       completionMessage: "Il tuo allenamento di oggi è terminato.",
-
       viewSummary: "Vedi riepilogo",
     },
-
     exercises: {
       title: "I miei esercizi",
-
       addExercise: "Aggiungi esercizio",
-
       editExercise: "Modifica esercizio",
-
       name: "Nome",
-
       muscleGroup: "Gruppo muscolare",
-
       description: "Descrizione facoltativa",
-
       searchPlaceholder: "Cerca un esercizio…",
-
       emptyTitle: "La tua libreria è vuota",
-
       emptyText:
         "Aggiungi i tuoi esercizi preferiti per ritrovarli rapidamente durante i tuoi allenamenti.",
-
       muscleGroups: {
         chest: "Pettorali",
-
         back: "Schiena",
-
         shoulders: "Spalle",
-
         biceps: "Bicipiti",
-
         triceps: "Tricipiti",
-
         legs: "Gambe",
-
         abs: "Addominali",
-
         glutes: "Glutei",
-
         cardio: "Cardio",
-
         other: "Altro",
       },
     },
-
     history: {
       title: "Cronologia",
-
       emptyTitle: "Nessun allenamento al momento",
-
       emptyText:
         "Inizia il tuo primo allenamento per iniziare a monitorare i tuoi progressi.",
-
       startFirstWorkout: "Inizia un allenamento",
-
       totalVolume: "Volume totale",
     },
-
     progress: {
       title: "Progressi",
-
       volumeOverTime: "Volume settimanale",
-
       workoutCount: "Numero di allenamenti",
-
       maxWeight: "Peso massimo",
-
       progressByExercise: "Progressi per esercizio",
-
       personalRecords: "Record personali",
-
       selectExercise: "Seleziona un esercizio",
-
       noData:
         "Non ci sono ancora dati sufficienti per visualizzare questo grafico.",
     },
-
     cycle: {
       title: "Il mio ciclo",
-
       subtitle: "Segui il tuo ciclo e la sua evoluzione nel tempo.",
-
       currentCycle: "Ciclo attuale",
-
       day: "Giorno",
-
       days: "giorni",
-
       averageLength: "Ciclo medio",
-
       nextPeriod: "Prossime mestruazioni stimate",
-
       ovulation: "Ovulazione stimata",
-
       noPhase: "Fase non determinata",
-
       noData: "Registra il tuo primo ciclo per iniziare il monitoraggio.",
-
       addTitle: "Registra un ciclo",
-
       startDate: "Inizio delle mestruazioni",
-
       endDate: "Fine delle mestruazioni",
-
       endDateNotProvided: "Fine non indicata",
-
       until: "fino al",
-
       save: "Salva il ciclo",
-
       day: "Giorno",
-
       of: "su",
-
       phaseDays: "Giorni",
-
       addDescription:
         "Aggiungi le date di inizio e fine delle mestruazioni per monitorare il tuo ciclo.",
-
       endDateHint:
         "Puoi inserire la data di fine più tardi se le mestruazioni sono ancora in corso.",
-
       endDateLater:
         "Puoi inserire la data di fine più tardi se le mestruazioni sono ancora in corso.",
-
       cycleDuration: "Ciclo di",
-
       periodDuration: "giorni di mestruazioni",
-
       history: "Cronologia dei cicli",
-
       emptyHistory: "Nessun ciclo registrato.",
-
       delete: "Elimina",
-
       confirmDelete: "Vuoi davvero eliminare questo ciclo?",
-
       notAvailable:
         "Il monitoraggio del ciclo mestruale non è attivato per questo profilo.",
-
       sexRequired:
         "Completa il tuo profilo per accedere al monitoraggio del ciclo.",
-
       phases: {
         menstrual: "Mestruazioni",
-
         follicular: "Fase follicolare",
-
         ovulation: "Ovulazione stimata",
-
         luteal: "Fase luteale",
       },
-
       confidence: {
         low: "Stima limitata",
-
         medium: "Stima basata sulla tua cronologia",
-
         high: "Stima basata sulla tua cronologia",
       },
-
       errors: {
         startDateRequired: "La data di inizio è obbligatoria.",
-
         endDateBeforeStart:
           "La data di fine deve essere successiva o uguale alla data di inizio.",
-
         save: "Impossibile salvare il ciclo.",
-
         generic: "Si è verificato un errore. Riprova.",
-
         endDateTooLate:
           "La durata delle mestruazioni non può superare i 10 giorni.",
       },
@@ -875,62 +708,39 @@ export const translations = {
       selectedDate: "Data selezionata",
       today: "Oggi",
     },
-
     profile: {
       title: "Profilo",
-
       memberSince: "Membro dal",
-
       changeAvatar: "Cambia foto",
-
       firstName: "Nome",
-
       username: "Nome utente",
-
       email: "Email",
-
       preferences: "Preferenze",
-
       language: "Lingua",
-
       appearance: "Aspetto",
-
       dark: "Scuro",
-
       light: "Chiaro",
-
       system: "Sistema",
-
       saveChanges: "Salva modifiche",
-
       changesSaved: "Modifiche salvate.",
-
       sex: "Sesso",
-
       sexNotSpecified: "Non specificato",
-
       male: "Uomo",
-
       female: "Donna",
     },
-
     settings: {
       title: "Impostazioni",
-
       account: "Account",
-
       dangerZone: "Zona sensibile",
-
       deleteAccount: "Elimina il mio account",
     },
-
     empty: {
       noWorkouts: "Nessun allenamento al momento",
     },
   },
   es: {
     common: {
-      appName: "Forge your Body",
+      appName: "Forge",
       loading: "Cargando…",
       save: "Guardar",
       cancel: "Cancelar",
