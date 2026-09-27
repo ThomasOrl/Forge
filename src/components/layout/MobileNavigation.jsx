@@ -16,6 +16,12 @@ const items = [
     labelKey: "nav.workout",
   },
   {
+    to: "/goals",
+    key: "goals",
+    icon: "/ForgeIcons/Objectifs.png",
+    labelKey: "nav.goals",
+  },
+  {
     to: "/history",
     key: "history",
     icon: "/ForgeIcons/Historique.png",
@@ -49,12 +55,12 @@ export default function MobileNavigation() {
             to={item.to}
             end={item.to === "/"}
             className={({ isActive }) =>
-              `flex flex-col items-center gap-1 px-3 py-1.5 rounded-btn text-[11px] font-medium min-w-[64px] transition-colors ${
+              `flex flex-1 min-w-0 flex-col items-center gap-1 px-0.5 py-1.5 rounded-btn text-[10px] leading-tight text-center font-medium transition-colors ${
                 isActive ? "text-accent" : "text-secondary"
               }`
             }
           >
-            <img src={item.icon} alt="" className="w-10 h-10 object-contain" />
+            <img src={item.icon} alt="" className="w-8 h-8 object-contain" />
 
             <span>{t(item.labelKey)}</span>
           </NavLink>

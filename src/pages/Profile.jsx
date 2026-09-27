@@ -6,6 +6,7 @@ import ProfileCard from "../components/ProfileCard";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import LanguageSelector from "../components/ui/LanguageSelector";
+import PageTitle from "../components/ui/PageTitle";
 
 export default function Profile() {
   const { profile, updateProfile } = useAuth();
@@ -39,9 +40,9 @@ export default function Profile() {
 
   return (
     <div className="animate-fadeIn max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold text-primary mb-6">
+      <PageTitle icon="/ForgeIcons/Profile.png" className="mb-6">
         {t("profile.title")}
-      </h1>
+      </PageTitle>
 
       <ProfileCard profile={profile} />
 

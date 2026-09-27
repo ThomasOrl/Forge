@@ -5,6 +5,7 @@ import Modal from '../components/ui/Modal'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
 import EmptyState from '../components/ui/EmptyState'
+import PageTitle from '../components/ui/PageTitle'
 
 const MUSCLE_GROUPS = ['chest', 'back', 'shoulders', 'biceps', 'triceps', 'legs', 'abs', 'glutes', 'cardio', 'other']
 
@@ -54,18 +55,32 @@ export default function Exercises() {
   }
 
   return (
-    <div className="animate-fadeIn">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-primary">{t('exercises.title')}</h1>
-        <Button onClick={openCreate}>{t('exercises.addExercise')}</Button>
+    <div className="animate-fadeIn max-w-6xl mx-auto">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <PageTitle
+          icon="/ForgeIcons/Exercices.png"
+        >
+          {t('exercises.title')}
+        </PageTitle>
+        <Button onClick={openCreate} className="self-start sm:self-auto">
+          {t('exercises.addExercise')}
+        </Button>
       </div>
 
-      <Input
-        placeholder={t('exercises.searchPlaceholder')}
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-        className="mb-6"
-      />
+      <div className="card p-4 sm:p-5 mb-6 border-accent/15 bg-gradient-to-br from-accent/5 to-transparent">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+          <Input
+            placeholder={t('exercises.searchPlaceholder')}
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+          {!loading && (
+            <span className="inline-flex items-center justify-center shrink-0 rounded-full border border-accent/20 bg-accent/5 px-3 py-2 text-xs font-semibold text-accent">
+              {filtered.length} {t('common.exercises')}
+            </span>
+          )}
+        </div>
+      </div>
 
       {loading ? (
         <p className="text-secondary text-sm">{t('common.loading')}</p>
@@ -77,18 +92,23 @@ export default function Exercises() {
           onAction={openCreate}
         />
       ) : (
-        <div className="grid sm:grid-cols-2 gap-3">
+        <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-3">
           {filtered.map(ex => (
             <button
               key={ex.id}
               onClick={() => openEdit(ex)}
-              className="card p-4 text-left hover:border-accent/30 transition-colors"
+              className="card group relative overflow-hidden p-4 sm:p-5 text-left hover:border-accent/40 hover:shadow-cardHover hover:-translate-y-0.5 transition-all"
             >
-              <div className="flex items-center justify-between">
-                <h4 className="font-semibold text-primary">{ex.name}</h4>
-                {ex.is_demo && <span className="text-[10px] px-2 py-0.5 rounded-full bg-dark-cardAlt text-secondary border border-app">{t('common.demoTag')}</span>}
+              <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-accent/0 via-accent/60 to-accent/0 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <h4 className="font-semibold text-primary truncate">{ex.name}</h4>
+                  <span className="inline-flex mt-2 rounded-full border border-accent/15 bg-accent/5 px-2.5 py-1 text-[11px] font-medium text-accent">
+                    {t(`exercises.muscleGroups.${ex.muscle_group}`)}
+                  </span>
+                </div>
+                {ex.is_demo && <span className="shrink-0 text-[10px] px-2 py-0.5 rounded-full bg-dark-cardAlt text-secondary border border-app">{t('common.demoTag')}</span>}
               </div>
-              <p className="text-xs text-secondary mt-1">{t(`exercises.muscleGroups.${ex.muscle_group}`)}</p>
             </button>
           ))}
         </div>

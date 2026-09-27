@@ -5,6 +5,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 import { supabase } from "../lib/supabase";
 import WorkoutCard from "../components/WorkoutCard";
 import EmptyState from "../components/ui/EmptyState";
+import PageTitle from "../components/ui/PageTitle";
 
 export default function History() {
   const { user } = useAuth();
@@ -71,10 +72,19 @@ export default function History() {
   }, [user]);
 
   return (
-    <div className="animate-fadeIn">
-      <h1 className="text-2xl font-bold text-primary mb-6">
-        {t("history.title")}
-      </h1>
+    <div className="animate-fadeIn max-w-5xl mx-auto">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+        <PageTitle icon="/ForgeIcons/Historique.png">
+          {t("history.title")}
+        </PageTitle>
+        {!loading && workouts.length > 0 && (
+          <span className="inline-flex items-center gap-2 self-start sm:self-auto rounded-full border border-accent/20 bg-accent/5 px-3.5 py-2 text-sm text-secondary">
+            <span className="w-2 h-2 rounded-full bg-accent" />
+            <span className="font-semibold text-accent">{workouts.length}</span>
+            {t("dashboard.totalWorkouts")}
+          </span>
+        )}
+      </div>
 
       {loading ? (
         <p className="text-secondary text-sm">{t("common.loading")}</p>

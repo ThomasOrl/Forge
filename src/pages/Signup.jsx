@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
+import PageTitle from "../components/ui/PageTitle";
 
 export default function Signup() {
   const { signUp } = useAuth();
@@ -79,9 +80,9 @@ export default function Signup() {
         </div>
 
         <div className="card p-8">
-          <h1 className="text-2xl font-bold text-primary mb-2">
+          <PageTitle icon="/ForgeIcons/Profile.png" className="mb-2">
             {t("auth.signupTitle")}
-          </h1>
+          </PageTitle>
           <p className="text-sm text-secondary mb-6">
             {t("auth.signupSubtitle")}
           </p>

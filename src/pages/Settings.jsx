@@ -2,6 +2,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useNavigate } from 'react-router-dom'
 import Button from '../components/ui/Button'
+import PageTitle from '../components/ui/PageTitle'
 
 export default function Settings() {
   const { signOut, user } = useAuth()
@@ -15,7 +16,9 @@ export default function Settings() {
 
   return (
     <div className="animate-fadeIn max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold text-primary mb-6">{t('settings.title')}</h1>
+      <PageTitle icon="/ForgeIcons/Parametres.png" className="mb-6">
+        {t('settings.title')}
+      </PageTitle>
 
       <div className="card p-6 mb-6">
         <h3 className="font-bold text-primary mb-2">{t('settings.account')}</h3>

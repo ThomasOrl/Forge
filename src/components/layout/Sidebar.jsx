@@ -31,6 +31,11 @@ const navItems = [
     icon: "/ForgeIcons/Progression.png",
   },
   {
+    to: "/goals",
+    labelKey: "nav.goals",
+    icon: "/ForgeIcons/Objectifs.png",
+  },
+  {
     to: "/cycle",
     labelKey: "nav.cycle",
     icon: "/ForgeIcons/cycle.png",

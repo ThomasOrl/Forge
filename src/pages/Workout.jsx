@@ -10,6 +10,7 @@ import WorkoutCompletionModal from "../components/workout/WorkoutCompletionModal
 import WorkoutSummary from "../components/workout/WorkoutSummary";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
+import PageTitle from "../components/ui/PageTitle";
 
 export default function Workout() {
   const { t } = useLanguage();
@@ -79,54 +80,78 @@ export default function Workout() {
 
   if (!workout) {
     return (
-      <div className="max-w-md mx-auto mt-10 animate-fadeIn">
-        <h1 className="text-2xl font-bold text-primary mb-6">
-          {t("workout.newWorkout")}
-        </h1>
+      <div className="max-w-xl mx-auto mt-6 sm:mt-10 animate-fadeIn">
+        <section className="card relative isolate overflow-hidden p-6 sm:p-8 border-accent/20 bg-gradient-to-br from-accent/10 to-transparent">
+          <div className="absolute -right-16 -top-20 -z-10 w-64 h-64 rounded-full bg-accent/15 blur-3xl pointer-events-none" />
+          <div className="relative">
+            <PageTitle icon="/ForgeIcons/Entrainement.png" className="mb-6">
+              {t("workout.newWorkout")}
+            </PageTitle>
 
-        <div className="card p-6">
-          <Input
-            label={t("workout.workoutName")}
-            placeholder={t("workout.workoutNamePlaceholder")}
-            value={workoutName}
-            onChange={(event) => setWorkoutName(event.target.value)}
-            className="mb-4"
-          />
+            <Input
+              label={t("workout.workoutName")}
+              placeholder={t("workout.workoutNamePlaceholder")}
+              value={workoutName}
+              onChange={(event) => setWorkoutName(event.target.value)}
+              className="mb-4"
+            />
 
-          {error && (
-            <p className="text-sm text-red-400 mb-4" role="alert">
-              {t("auth.errors.generic")}
-            </p>
-          )}
+            {error && (
+              <p className="text-sm text-red-400 mb-4" role="alert">
+                {t("auth.errors.generic")}
+              </p>
+            )}
 
-          <Button
-            size="lg"
-            className="w-full"
-            onClick={() => startWorkout(workoutName)}
-            disabled={creating || !workoutName.trim()}
-          >
-            {creating ? t("common.loading") : t("dashboard.startWorkout")}
-          </Button>
-        </div>
+            <Button
+              size="lg"
+              className="w-full"
+              onClick={() => startWorkout(workoutName)}
+              disabled={creating || !workoutName.trim()}
+            >
+              {creating ? t("common.loading") : t("dashboard.startWorkout")}
+            </Button>
+          </div>
+        </section>
       </div>
     );
   }
 
   return (
     <>
-      <div className="animate-fadeIn pb-6">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-xl font-bold text-primary">{workout.name}</h1>
-            <p className="text-xs text-secondary">{t("workout.inProgress")}</p>
-          </div>
+      <div className="animate-fadeIn max-w-5xl mx-auto pb-6">
+        <div className="card relative isolate overflow-hidden p-5 sm:p-6 mb-6 border-accent/20 bg-gradient-to-br from-accent/10 to-transparent">
+          <div className="absolute -right-12 -top-20 -z-10 w-56 h-56 rounded-full bg-accent/15 blur-3xl pointer-events-none" />
+          <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <PageTitle icon="/ForgeIcons/Entrainement.png">
+                {workout.name}
+              </PageTitle>
+              <span className="inline-flex items-center gap-2 mt-2 rounded-full border border-accent/20 bg-accent/5 px-3 py-1 text-xs font-medium text-accent">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                {t("workout.inProgress")}
+              </span>
+            </div>
 
-          <Button
-            onClick={finishActiveWorkout}
-            disabled={workoutExercises.length === 0 || finishing}
-          >
-            {finishing ? t("common.loading") : t("workout.finishWorkout")}
-          </Button>
+            <div className="flex items-center justify-between sm:justify-end gap-4">
+              <div className="text-right">
+                <p className="text-lg font-bold text-primary">
+                  {workoutExercises.length}
+                  <span className="ml-1 text-xs font-medium text-secondary">
+                    {t("common.exercises")}
+                  </span>
+                </p>
+                <p className="text-xs text-secondary">
+                  {totalSets} {t("common.sets")}
+                </p>
+              </div>
+              <Button
+                onClick={finishActiveWorkout}
+                disabled={workoutExercises.length === 0 || finishing}
+              >
+                {finishing ? t("common.loading") : t("workout.finishWorkout")}
+              </Button>
+            </div>
+          </div>
         </div>
 
         {error && (
@@ -150,7 +175,7 @@ export default function Workout() {
 
         <button
           onClick={() => setSelectorOpen(true)}
-          className="w-full py-4 rounded-btn border border-dashed border-app text-secondary hover:text-primary hover:border-accent/40 transition-colors font-medium"
+          className="w-full py-4 rounded-btn border border-dashed border-accent/40 bg-accent/5 text-accent hover:bg-accent/10 hover:border-accent/70 transition-colors font-semibold"
         >
           {t("workout.addExercise")}
         </button>

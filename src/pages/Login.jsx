@@ -5,6 +5,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import LanguageSelector from "../components/ui/LanguageSelector";
+import PageTitle from "../components/ui/PageTitle";
 
 export default function Login() {
   const { signIn, resetPassword } = useAuth();
@@ -76,9 +77,9 @@ export default function Login() {
         </div>
 
         <div className="card p-8">
-          <h1 className="text-2xl font-bold text-primary mb-2">
+          <PageTitle icon="/ForgeIcons/Profile.png" className="mb-2">
             {t("auth.welcome")}
-          </h1>
+          </PageTitle>
           <p className="text-sm text-secondary mb-6">
             {t("auth.loginSubtitle")}
           </p>

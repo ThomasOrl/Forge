@@ -14,6 +14,7 @@ import Cycle from "./pages/Cycle";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import ResetPassword from "./pages/ResetPassword";
+import Goals from "./pages/Goals";
 
 export default function App() {
   const { user, loading } = useAuth();
@@ -51,6 +52,7 @@ export default function App() {
         <Route path="/history" element={<History />} />
         <Route path="/history/:id" element={<HistoryDetail />} />
         <Route path="/progress" element={<Progress />} />
+        <Route path="/goals" element={<Goals />} />
         <Route path="/cycle" element={<Cycle />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />

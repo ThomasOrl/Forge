@@ -29,7 +29,7 @@ body {
   border-radius: 8px;
 }
 .light ::-webkit-scrollbar-thumb {
-  background: #e5e5e5;
+  background: #d6d2cb;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -49,6 +49,22 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .light .card-alt {
   @apply bg-light-cardAlt border-light-border;
+}
+
+.light .bg-dark-card {
+  background-color: #f7f5f0;
+}
+
+.light .bg-dark-cardAlt {
+  background-color: #f0eee9;
+}
+
+.light .hover\:bg-dark-cardAlt:hover {
+  background-color: #ece7f0;
+}
+
+.light .bg-dark-card\/95 {
+  background-color: rgb(247 245 240 / 95%);
 }
 
 .text-primary {

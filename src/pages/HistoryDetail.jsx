@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import { fetchWorkoutDetail } from '../hooks/useWorkouts'
 import { calculateExerciseVolume, formatVolume, localeFromLang } from '../utils/calculations'
+import PageTitle from '../components/ui/PageTitle'
 
 export default function HistoryDetail() {
   const { id } = useParams()
@@ -31,7 +32,9 @@ export default function HistoryDetail() {
     <div className="animate-fadeIn max-w-2xl mx-auto">
       <button onClick={() => navigate(-1)} className="text-sm text-secondary hover:text-primary mb-4">← {t('nav.history')}</button>
 
-      <h1 className="text-2xl font-bold text-primary mb-1">{workout.name}</h1>
+      <PageTitle icon="/ForgeIcons/Historique.png" className="mb-1">
+        {workout.name}
+      </PageTitle>
       <p className="text-sm text-secondary mb-6">{dateLabel}</p>
 
       <div className="flex flex-col gap-4 mb-6">

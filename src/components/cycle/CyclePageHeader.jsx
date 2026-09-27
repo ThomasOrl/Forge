@@ -1,9 +1,11 @@
+import PageTitle from "../ui/PageTitle";
+
 export default function CyclePageHeader({ t }) {
   return (
     <div className="relative mb-7">
-      <h1 className="text-2xl sm:text-3xl font-bold text-primary">
+      <PageTitle icon="/ForgeIcons/cycle.png">
         {t("cycle.title")}
-      </h1>
+      </PageTitle>
 
       <p className="text-secondary mt-1">{t("cycle.subtitle")}</p>
     </div>

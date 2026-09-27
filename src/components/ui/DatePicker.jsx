@@ -213,7 +213,7 @@ export default function DatePicker({
         <div
           role="dialog"
           aria-label={t("datePicker.selectDate")}
-          className="absolute z-50 mt-2 w-[320px] max-w-[calc(100vw-2rem)] rounded-xl border border-app bg-[#111016] p-4 shadow-2xl"
+          className="absolute z-50 mt-2 w-[320px] max-w-[calc(100vw-2rem)] rounded-xl border border-app bg-dark-card p-4 shadow-2xl"
         >
           <div className="flex items-center justify-between mb-4">
             <button

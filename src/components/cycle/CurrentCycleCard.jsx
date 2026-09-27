@@ -20,7 +20,7 @@ function CycleProgress({ cycleDay, cycleLength, t }) {
         boxShadow: "0 0 28px rgba(168, 85, 247, 0.18)",
       }}
     >
-      <div className="absolute inset-[7px] rounded-full bg-[#101012] flex flex-col items-center justify-center">
+      <div className="absolute inset-[7px] rounded-full bg-dark-card flex flex-col items-center justify-center">
         <span className="text-xs text-secondary">{t("cycle.day")}</span>
 
         <span className="text-3xl sm:text-4xl font-bold text-primary leading-none mt-1">

@@ -1,0 +1,386 @@
+const meal = (fr, en, it, es) => ({ fr, en, it, es });
+
+export const goalMealPlans = {
+  mass: [
+    {
+      day: "monday",
+      breakfast: meal(
+        "Porridge d’avoine au lait, banane, beurre de cacahuète et yaourt grec",
+        "Oat porridge with milk, banana, peanut butter and Greek yogurt",
+        "Porridge d’avena con latte, banana, burro di arachidi e yogurt greco",
+        "Avena cocida con leche, plátano, crema de cacahuete y yogur griego",
+      ),
+      lunch: meal(
+        "Riz complet, poulet grillé, avocat et légumes verts",
+        "Brown rice, grilled chicken, avocado and green vegetables",
+        "Riso integrale, pollo alla griglia, avocado e verdure verdi",
+        "Arroz integral, pollo a la plancha, aguacate y verduras verdes",
+      ),
+      snack: meal(
+        "Fromage blanc, granola, fruits rouges et noix",
+        "Quark, granola, berries and walnuts",
+        "Fiocchi di latte, granola, frutti di bosco e noci",
+        "Queso fresco batido, granola, frutos rojos y nueces",
+      ),
+      dinner: meal(
+        "Saumon, pommes de terre rôties, brocoli et huile d’olive",
+        "Salmon, roasted potatoes, broccoli and olive oil",
+        "Salmone, patate al forno, broccoli e olio d’oliva",
+        "Salmón, patatas asadas, brócoli y aceite de oliva",
+      ),
+    },
+    {
+      day: "tuesday",
+      breakfast: meal(
+        "Pain complet, œufs brouillés, avocat et orange",
+        "Wholegrain toast, scrambled eggs, avocado and orange",
+        "Pane integrale, uova strapazzate, avocado e arancia",
+        "Pan integral, huevos revueltos, aguacate y naranja",
+      ),
+      lunch: meal(
+        "Quinoa, lentilles, feta, courgettes et poivrons rôtis",
+        "Quinoa, lentils, feta, roasted courgette and peppers",
+        "Quinoa, lenticchie, feta, zucchine e peperoni al forno",
+        "Quinoa, lentejas, feta, calabacín y pimientos asados",
+      ),
+      snack: meal(
+        "Banane, yaourt nature et amandes",
+        "Banana, plain yogurt and almonds",
+        "Banana, yogurt bianco e mandorle",
+        "Plátano, yogur natural y almendras",
+      ),
+      dinner: meal(
+        "Pâtes complètes, boulettes de dinde, sauce tomate et épinards",
+        "Wholewheat pasta, turkey meatballs, tomato sauce and spinach",
+        "Pasta integrale, polpette di tacchino, salsa di pomodoro e spinaci",
+        "Pasta integral, albóndigas de pavo, salsa de tomate y espinacas",
+      ),
+    },
+    {
+      day: "wednesday",
+      breakfast: meal(
+        "Muesli, lait, poire, graines de chia et fromage blanc",
+        "Muesli with milk, pear, chia seeds and quark",
+        "Muesli con latte, pera, semi di chia e fiocchi di latte",
+        "Muesli con leche, pera, semillas de chía y queso fresco batido",
+      ),
+      lunch: meal(
+        "Patate douce, steak de bœuf maigre, haricots verts et salade",
+        "Sweet potato, lean beef steak, green beans and salad",
+        "Patata dolce, bistecca di manzo magro, fagiolini e insalata",
+        "Boniato, filete de ternera magra, judías verdes y ensalada",
+      ),
+      snack: meal(
+        "Tartines de pain complet, ricotta et fruits frais",
+        "Wholegrain toast with ricotta and fresh fruit",
+        "Pane integrale con ricotta e frutta fresca",
+        "Tostadas integrales con ricotta y fruta fresca",
+      ),
+      dinner: meal(
+        "Curry de pois chiches, riz basmati et épinards",
+        "Chickpea curry with basmati rice and spinach",
+        "Curry di ceci con riso basmati e spinaci",
+        "Curry de garbanzos con arroz basmati y espinacas",
+      ),
+    },
+    {
+      day: "thursday",
+      breakfast: meal(
+        "Pancakes à l’avoine, skyr, fraises et purée d’amandes",
+        "Oat pancakes with skyr, strawberries and almond butter",
+        "Pancake d’avena con skyr, fragole e crema di mandorle",
+        "Tortitas de avena con skyr, fresas y crema de almendras",
+      ),
+      lunch: meal(
+        "Boulgour, saumon, concombre, tomates et sauce au yaourt",
+        "Bulgur, salmon, cucumber, tomatoes and yogurt dressing",
+        "Bulgur, salmone, cetriolo, pomodori e salsa allo yogurt",
+        "Bulgur, salmón, pepino, tomate y salsa de yogur",
+      ),
+      snack: meal(
+        "Smoothie au lait, banane, flocons d’avoine et cacao",
+        "Milk smoothie with banana, oats and cocoa",
+        "Frullato di latte, banana, fiocchi d’avena e cacao",
+        "Batido de leche, plátano, avena y cacao",
+      ),
+      dinner: meal(
+        "Fajitas de poulet, tortillas de blé complet, haricots noirs et légumes",
+        "Chicken fajitas, wholewheat tortillas, black beans and vegetables",
+        "Fajitas di pollo, tortillas integrali, fagioli neri e verdure",
+        "Fajitas de pollo, tortillas integrales, frijoles negros y verduras",
+      ),
+    },
+    {
+      day: "friday",
+      breakfast: meal(
+        "Yaourt grec, granola, kiwi et graines de courge",
+        "Greek yogurt, granola, kiwi and pumpkin seeds",
+        "Yogurt greco, granola, kiwi e semi di zucca",
+        "Yogur griego, granola, kiwi y semillas de calabaza",
+      ),
+      lunch: meal(
+        "Riz, tofu sauté, edamame, carottes et sauce au sésame",
+        "Rice, stir-fried tofu, edamame, carrots and sesame dressing",
+        "Riso, tofu saltato, edamame, carote e salsa al sesamo",
+        "Arroz, tofu salteado, edamame, zanahoria y salsa de sésamo",
+      ),
+      snack: meal(
+        "Sandwich de pain complet au thon, maïs et crudités",
+        "Wholegrain tuna sandwich with sweetcorn and salad vegetables",
+        "Panino integrale con tonno, mais e verdure crude",
+        "Sándwich integral de atún, maíz y verduras crudas",
+      ),
+      dinner: meal(
+        "Chili de bœuf et haricots rouges, riz et salade",
+        "Beef and kidney bean chilli with rice and salad",
+        "Chili di manzo e fagioli rossi con riso e insalata",
+        "Chili de ternera y alubias rojas con arroz y ensalada",
+      ),
+    },
+    {
+      day: "saturday",
+      breakfast: meal(
+        "Œufs, pommes de terre sautées, tomates et pain complet",
+        "Eggs, sautéed potatoes, tomatoes and wholegrain bread",
+        "Uova, patate saltate, pomodori e pane integrale",
+        "Huevos, patatas salteadas, tomate y pan integral",
+      ),
+      lunch: meal(
+        "Pâtes au pesto, poulet, tomates cerises et roquette",
+        "Pesto pasta with chicken, cherry tomatoes and rocket",
+        "Pasta al pesto con pollo, pomodorini e rucola",
+        "Pasta al pesto con pollo, tomates cherry y rúcula",
+      ),
+      snack: meal(
+        "Skyr, mangue et noix de cajou",
+        "Skyr with mango and cashews",
+        "Skyr con mango e anacardi",
+        "Skyr con mango y anacardos",
+      ),
+      dinner: meal(
+        "Cabillaud, couscous complet, pois chiches et légumes rôtis",
+        "Cod, wholewheat couscous, chickpeas and roasted vegetables",
+        "Merluzzo, couscous integrale, ceci e verdure al forno",
+        "Bacalao, cuscús integral, garbanzos y verduras asadas",
+      ),
+    },
+    {
+      day: "sunday",
+      breakfast: meal(
+        "Overnight oats au lait, pomme, cannelle et noisettes",
+        "Overnight oats with milk, apple, cinnamon and hazelnuts",
+        "Overnight oats con latte, mela, cannella e nocciole",
+        "Avena reposada con leche, manzana, canela y avellanas",
+      ),
+      lunch: meal(
+        "Poulet rôti, pommes de terre, carottes et salade verte",
+        "Roast chicken, potatoes, carrots and green salad",
+        "Pollo arrosto, patate, carote e insalata verde",
+        "Pollo asado, patatas, zanahorias y ensalada verde",
+      ),
+      snack: meal(
+        "Fromage blanc, pêche et granola",
+        "Quark with peach and granola",
+        "Fiocchi di latte con pesca e granola",
+        "Queso fresco batido con melocotón y granola",
+      ),
+      dinner: meal(
+        "Omelette aux champignons, pain complet et salade de tomates",
+        "Mushroom omelette with wholegrain bread and tomato salad",
+        "Frittata ai funghi con pane integrale e insalata di pomodori",
+        "Tortilla de champiñones con pan integral y ensalada de tomate",
+      ),
+    },
+  ],
+  cut: [
+    {
+      day: "monday",
+      breakfast: meal(
+        "Omelette aux épinards et champignons, pain complet et kiwi",
+        "Spinach and mushroom omelette with wholegrain toast and kiwi",
+        "Frittata con spinaci e funghi, pane integrale e kiwi",
+        "Tortilla de espinacas y champiñones, pan integral y kiwi",
+      ),
+      lunch: meal(
+        "Poulet grillé, quinoa, salade croquante et vinaigrette citronnée",
+        "Grilled chicken, quinoa, crunchy salad and lemon dressing",
+        "Pollo alla griglia, quinoa, insalata croccante e condimento al limone",
+        "Pollo a la plancha, quinoa, ensalada crujiente y aliño de limón",
+      ),
+      snack: meal(
+        "Skyr nature, pomme et cannelle",
+        "Plain skyr with apple and cinnamon",
+        "Skyr bianco con mela e cannella",
+        "Skyr natural con manzana y canela",
+      ),
+      dinner: meal(
+        "Cabillaud, lentilles, haricots verts et citron",
+        "Cod, lentils, green beans and lemon",
+        "Merluzzo, lenticchie, fagiolini e limone",
+        "Bacalao, lentejas, judías verdes y limón",
+      ),
+    },
+    {
+      day: "tuesday",
+      breakfast: meal(
+        "Yaourt grec, flocons d’avoine, fruits rouges et graines de chia",
+        "Greek yogurt, oats, berries and chia seeds",
+        "Yogurt greco, fiocchi d’avena, frutti di bosco e semi di chia",
+        "Yogur griego, copos de avena, frutos rojos y semillas de chía",
+      ),
+      lunch: meal(
+        "Salade de pois chiches, concombre, tomates, feta et persil",
+        "Chickpea salad with cucumber, tomatoes, feta and parsley",
+        "Insalata di ceci con cetriolo, pomodori, feta e prezzemolo",
+        "Ensalada de garbanzos con pepino, tomate, feta y perejil",
+      ),
+      snack: meal(
+        "Carottes et concombre, houmous et œuf dur",
+        "Carrot and cucumber sticks with hummus and a boiled egg",
+        "Bastoncini di carota e cetriolo con hummus e uovo sodo",
+        "Palitos de zanahoria y pepino con hummus y huevo cocido",
+      ),
+      dinner: meal(
+        "Dinde grillée, patate douce et brocoli vapeur",
+        "Grilled turkey, sweet potato and steamed broccoli",
+        "Tacchino alla griglia, patata dolce e broccoli al vapore",
+        "Pavo a la plancha, boniato y brócoli al vapor",
+      ),
+    },
+    {
+      day: "wednesday",
+      breakfast: meal(
+        "Porridge d’avoine, poire et fromage blanc",
+        "Oat porridge with pear and quark",
+        "Porridge d’avena con pera e fiocchi di latte",
+        "Avena cocida con pera y queso fresco batido",
+      ),
+      lunch: meal(
+        "Bowl de tofu, riz complet, chou rouge, edamame et sauce soja légère",
+        "Tofu bowl with brown rice, red cabbage, edamame and light soy dressing",
+        "Bowl di tofu, riso integrale, cavolo rosso, edamame e salsa di soia leggera",
+        "Bol de tofu, arroz integral, col lombarda, edamame y salsa de soja ligera",
+      ),
+      snack: meal(
+        "Orange et cottage cheese",
+        "Orange and cottage cheese",
+        "Arancia e fiocchi di latte",
+        "Naranja y queso cottage",
+      ),
+      dinner: meal(
+        "Saumon, salade de légumes rôtis et boulgour",
+        "Salmon with roasted vegetable salad and bulgur",
+        "Salmone con insalata di verdure al forno e bulgur",
+        "Salmón con ensalada de verduras asadas y bulgur",
+      ),
+    },
+    {
+      day: "thursday",
+      breakfast: meal(
+        "Œufs brouillés, tomates, épinards et pain de seigle",
+        "Scrambled eggs with tomatoes, spinach and rye bread",
+        "Uova strapazzate con pomodori, spinaci e pane di segale",
+        "Huevos revueltos con tomate, espinacas y pan de centeno",
+      ),
+      lunch: meal(
+        "Salade de thon, haricots blancs, tomates et roquette",
+        "Tuna, white bean, tomato and rocket salad",
+        "Insalata di tonno, fagioli bianchi, pomodori e rucola",
+        "Ensalada de atún, alubias blancas, tomate y rúcula",
+      ),
+      snack: meal(
+        "Poire et poignée d’amandes",
+        "Pear and a handful of almonds",
+        "Pera e una manciata di mandorle",
+        "Pera y un puñado de almendras",
+      ),
+      dinner: meal(
+        "Poulet, ratatouille et pommes de terre vapeur",
+        "Chicken with ratatouille and steamed potatoes",
+        "Pollo con ratatouille e patate al vapore",
+        "Pollo con ratatouille y patatas al vapor",
+      ),
+    },
+    {
+      day: "friday",
+      breakfast: meal(
+        "Skyr, banane, flocons d’avoine et graines de lin",
+        "Skyr with banana, oats and flaxseed",
+        "Skyr con banana, fiocchi d’avena e semi di lino",
+        "Skyr con plátano, avena y semillas de lino",
+      ),
+      lunch: meal(
+        "Boulettes de dinde, semoule complète, courgettes et tomates",
+        "Turkey meatballs, wholewheat couscous, courgette and tomatoes",
+        "Polpette di tacchino, couscous integrale, zucchine e pomodori",
+        "Albóndigas de pavo, cuscús integral, calabacín y tomate",
+      ),
+      snack: meal(
+        "Poivron et céleri, houmous",
+        "Pepper and celery sticks with hummus",
+        "Bastoncini di peperone e sedano con hummus",
+        "Palitos de pimiento y apio con hummus",
+      ),
+      dinner: meal(
+        "Tofu, légumes sautés et nouilles de sarrasin",
+        "Tofu with stir-fried vegetables and buckwheat noodles",
+        "Tofu con verdure saltate e noodles di grano saraceno",
+        "Tofu con verduras salteadas y fideos de trigo sarraceno",
+      ),
+    },
+    {
+      day: "saturday",
+      breakfast: meal(
+        "Pain complet, avocat, œuf poché et tomates",
+        "Wholegrain toast with avocado, a poached egg and tomatoes",
+        "Pane integrale con avocado, uovo in camicia e pomodori",
+        "Pan integral con aguacate, huevo escalfado y tomate",
+      ),
+      lunch: meal(
+        "Salade de lentilles, carottes, épinards et œuf dur",
+        "Lentil salad with carrots, spinach and a boiled egg",
+        "Insalata di lenticchie con carote, spinaci e uovo sodo",
+        "Ensalada de lentejas con zanahoria, espinacas y huevo cocido",
+      ),
+      snack: meal(
+        "Fromage blanc et pêches",
+        "Quark with peaches",
+        "Fiocchi di latte e pesche",
+        "Queso fresco batido con melocotón",
+      ),
+      dinner: meal(
+        "Crevettes, riz complet et légumes au wok",
+        "Prawns with brown rice and wok-fried vegetables",
+        "Gamberi con riso integrale e verdure saltate nel wok",
+        "Gambas con arroz integral y verduras salteadas al wok",
+      ),
+    },
+    {
+      day: "sunday",
+      breakfast: meal(
+        "Pancakes au fromage blanc, myrtilles et cannelle",
+        "Quark pancakes with blueberries and cinnamon",
+        "Pancake ai fiocchi di latte con mirtilli e cannella",
+        "Tortitas de queso fresco batido con arándanos y canela",
+      ),
+      lunch: meal(
+        "Poulet rôti, légumes de saison et pommes de terre",
+        "Roast chicken with seasonal vegetables and potatoes",
+        "Pollo arrosto con verdure di stagione e patate",
+        "Pollo asado con verduras de temporada y patatas",
+      ),
+      snack: meal(
+        "Pomme, yaourt nature et quelques noix",
+        "Apple, plain yogurt and a few walnuts",
+        "Mela, yogurt bianco e qualche noce",
+        "Manzana, yogur natural y unas nueces",
+      ),
+      dinner: meal(
+        "Soupe de légumes, omelette aux fines herbes et pain complet",
+        "Vegetable soup, herb omelette and wholegrain bread",
+        "Zuppa di verdure, frittata alle erbe e pane integrale",
+        "Sopa de verduras, tortilla a las finas hierbas y pan integral",
+      ),
+    },
+  ],
+};

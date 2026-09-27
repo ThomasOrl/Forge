@@ -21,13 +21,13 @@ export default {
         },
 
         light: {
-          bg: "#F7F7F5",
-          card: "#FFFFFF",
-          cardAlt: "#FAFAFA",
-          border: "#E5E5E5",
-          text: "#141414",
-          textSecondary: "#6B6B6B",
-          hover: "#F1E8F9",
+          bg: "#EEECE7",
+          card: "#F7F5F0",
+          cardAlt: "#F0EEE9",
+          border: "#DDD9D2",
+          text: "#34312C",
+          textSecondary: "#77736C",
+          hover: "#ECE7F0",
         },
       },
       fontFamily: {
@@ -38,7 +38,7 @@ export default {
         btn: "12px",
       },
       boxShadow: {
-        light: "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
+        light: "0 1px 3px rgba(48,42,31,0.035), 0 1px 2px rgba(48,42,31,0.025)",
         cardHover: "0 4px 20px rgba(0,0,0,0.08)",
       },
       keyframes: {

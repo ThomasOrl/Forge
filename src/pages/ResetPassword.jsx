@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
+import PageTitle from "../components/ui/PageTitle";
 
 export default function ResetPassword() {
   const { updatePassword } = useAuth();
@@ -55,9 +56,12 @@ export default function ResetPassword() {
       <div className="min-h-screen bg-app flex flex-col items-center justify-center px-6 py-10">
         <div className="w-full max-w-sm">
           <div className="card p-8 text-center">
-            <h1 className="text-2xl font-bold text-primary mb-3">
+            <PageTitle
+              icon="/ForgeIcons/Profile.png"
+              className="mb-3 justify-center"
+            >
               {t("auth.passwordUpdated")}
-            </h1>
+            </PageTitle>
 
             <p className="text-sm text-secondary mb-6">
               {t("auth.passwordUpdatedMessage")}
@@ -76,9 +80,9 @@ export default function ResetPassword() {
     <div className="min-h-screen bg-app flex flex-col items-center justify-center px-6 py-10">
       <div className="w-full max-w-sm">
         <div className="card p-8">
-          <h1 className="text-2xl font-bold text-primary mb-2">
+          <PageTitle icon="/ForgeIcons/Profile.png" className="mb-2">
             {t("auth.resetPassword")}
-          </h1>
+          </PageTitle>
 
           <p className="text-sm text-secondary mb-6">
             {t("auth.resetPasswordSubtitle")}
