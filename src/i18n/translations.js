@@ -243,6 +243,19 @@ export const translations = {
       account: "Compte",
       dangerZone: "Zone sensible",
       deleteAccount: "Supprimer mon compte",
+      deleteAccountDescription:
+        "La suppression effacera définitivement ton profil, tes séances, tes exercices et tes autres données.",
+      deleteAccountConfirmTitle: "Confirmer la suppression du compte",
+      deleteAccountConfirmText:
+        "Cette action est définitive. Saisis ton mot de passe actuel et le mot de confirmation pour continuer.",
+      deleteAccountPassword: "Mot de passe actuel",
+      deleteAccountPasswordError:
+        "Le mot de passe saisi est incorrect. Vérifie-le puis réessaie.",
+      deleteAccountTypePrompt: "Saisis le mot suivant :",
+      deleteAccountTypeWord: "SUPPRIMER",
+      deleteAccountError:
+        "La suppression du compte a échoué. Réessaie dans quelques instants.",
+      deleteAccountConfirmButton: "Supprimer définitivement",
     },
     goals: {
       title: "Programmes nutritionnels",
@@ -518,6 +531,19 @@ export const translations = {
       account: "Account",
       dangerZone: "Danger zone",
       deleteAccount: "Delete my account",
+      deleteAccountDescription:
+        "Deleting your account permanently removes your profile, workouts, exercises, and other data.",
+      deleteAccountConfirmTitle: "Confirm account deletion",
+      deleteAccountConfirmText:
+        "This action is permanent. Enter your current password and the confirmation word to continue.",
+      deleteAccountPassword: "Current password",
+      deleteAccountPasswordError:
+        "That password is incorrect. Check it and try again.",
+      deleteAccountTypePrompt: "Enter this word to confirm:",
+      deleteAccountTypeWord: "DELETE",
+      deleteAccountError:
+        "Account deletion failed. Please try again in a moment.",
+      deleteAccountConfirmButton: "Delete permanently",
     },
     goals: {
       title: "Nutrition programs",
@@ -800,6 +826,19 @@ export const translations = {
       account: "Account",
       dangerZone: "Zona sensibile",
       deleteAccount: "Elimina il mio account",
+      deleteAccountDescription:
+        "L’eliminazione cancellerà definitivamente il tuo profilo, gli allenamenti, gli esercizi e gli altri dati.",
+      deleteAccountConfirmTitle: "Conferma l’eliminazione dell’account",
+      deleteAccountConfirmText:
+        "Questa azione è definitiva. Inserisci la password attuale e la parola di conferma per continuare.",
+      deleteAccountPassword: "Password attuale",
+      deleteAccountPasswordError:
+        "La password inserita non è corretta. Controllala e riprova.",
+      deleteAccountTypePrompt: "Inserisci questa parola per confermare:",
+      deleteAccountTypeWord: "ELIMINA",
+      deleteAccountError:
+        "Eliminazione dell’account non riuscita. Riprova tra poco.",
+      deleteAccountConfirmButton: "Elimina definitivamente",
     },
     goals: {
       title: "Programmi nutrizionali",
@@ -1079,6 +1118,19 @@ export const translations = {
       account: "Cuenta",
       dangerZone: "Zona sensible",
       deleteAccount: "Eliminar mi cuenta",
+      deleteAccountDescription:
+        "Al eliminarla, se borrarán permanentemente tu perfil, entrenamientos, ejercicios y otros datos.",
+      deleteAccountConfirmTitle: "Confirmar la eliminación de la cuenta",
+      deleteAccountConfirmText:
+        "Esta acción es definitiva. Introduce tu contraseña actual y la palabra de confirmación para continuar.",
+      deleteAccountPassword: "Contraseña actual",
+      deleteAccountPasswordError:
+        "La contraseña introducida no es correcta. Revísala e inténtalo de nuevo.",
+      deleteAccountTypePrompt: "Escribe esta palabra para confirmar:",
+      deleteAccountTypeWord: "ELIMINAR",
+      deleteAccountError:
+        "No se pudo eliminar la cuenta. Inténtalo de nuevo dentro de un momento.",
+      deleteAccountConfirmButton: "Eliminar definitivamente",
     },
     goals: {
       title: "Programas de nutrición",

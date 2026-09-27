@@ -1,18 +1,85 @@
+import { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useNavigate } from 'react-router-dom'
 import Button from '../components/ui/Button'
+import Input from '../components/ui/Input'
+import Modal from '../components/ui/Modal'
 import PageTitle from '../components/ui/PageTitle'
+import { supabase } from '../lib/supabase'
 
 export default function Settings() {
   const { signOut, user } = useAuth()
   const { t } = useLanguage()
   const navigate = useNavigate()
+  const [deleteOpen, setDeleteOpen] = useState(false)
+  const [deletePassword, setDeletePassword] = useState('')
+  const [deleteConfirmation, setDeleteConfirmation] = useState('')
+  const [deleting, setDeleting] = useState(false)
+  const [deleteError, setDeleteError] = useState('')
 
   const handleLogout = async () => {
     await signOut()
     navigate('/login')
   }
+
+  const closeDeleteModal = () => {
+    if (deleting) return
+    setDeleteOpen(false)
+    setDeletePassword('')
+    setDeleteConfirmation('')
+    setDeleteError('')
+  }
+
+  const handleDeleteAccount = async () => {
+    if (!user?.email || deleting) return
+
+    setDeleting(true)
+    setDeleteError('')
+
+    try {
+      const { data, error: reauthenticationError } =
+        await supabase.auth.signInWithPassword({
+          email: user.email,
+          password: deletePassword,
+        })
+
+      if (
+        reauthenticationError ||
+        data.user?.id !== user.id ||
+        !data.session?.access_token
+      ) {
+        setDeleteError(t('settings.deleteAccountPasswordError'))
+        return
+      }
+
+      const { error: functionError } = await supabase.functions.invoke(
+        'delete-account',
+        {
+          headers: {
+            Authorization: `Bearer ${data.session.access_token}`,
+          },
+        },
+      )
+
+      if (functionError) {
+        setDeleteError(t('settings.deleteAccountError'))
+        return
+      }
+
+      await signOut()
+      setDeleteOpen(false)
+      navigate('/login', { replace: true })
+    } catch {
+      setDeleteError(t('settings.deleteAccountError'))
+    } finally {
+      setDeleting(false)
+    }
+  }
+
+  const confirmationMatches =
+    deleteConfirmation.trim().toLocaleUpperCase() ===
+    t('settings.deleteAccountTypeWord').toLocaleUpperCase()
 
   return (
     <div className="animate-fadeIn max-w-4xl mx-auto">
@@ -59,14 +126,75 @@ export default function Settings() {
           <div>
             <h2 className="font-bold text-red-400 mb-1">{t('settings.dangerZone')}</h2>
             <p className="text-sm text-secondary">
-              {t('settings.deleteAccount')}
+              {t('settings.deleteAccountDescription')}
             </p>
           </div>
         </div>
-        <Button variant="danger" disabled>
+        <Button variant="danger" onClick={() => setDeleteOpen(true)}>
           {t('settings.deleteAccount')}
         </Button>
       </section>
+
+      <Modal
+        open={deleteOpen}
+        onClose={closeDeleteModal}
+        title={t('settings.deleteAccountConfirmTitle')}
+      >
+        <p className="text-sm text-secondary leading-relaxed mb-5">
+          {t('settings.deleteAccountConfirmText')}
+        </p>
+
+        <div className="flex flex-col gap-4">
+          <Input
+            label={t('settings.deleteAccountPassword')}
+            type="password"
+            autoComplete="current-password"
+            value={deletePassword}
+            onChange={(event) => setDeletePassword(event.target.value)}
+          />
+
+          <div>
+            <p className="text-sm font-medium text-secondary mb-1.5">
+              {t('settings.deleteAccountTypePrompt')}{' '}
+              <span className="font-bold tracking-wide text-primary">
+                {t('settings.deleteAccountTypeWord')}
+              </span>
+            </p>
+            <Input
+              value={deleteConfirmation}
+              onChange={(event) => setDeleteConfirmation(event.target.value)}
+              autoComplete="off"
+            />
+          </div>
+
+          {deleteError && (
+            <p className="text-sm text-red-400" role="alert">
+              {deleteError}
+            </p>
+          )}
+
+          <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-2 pt-1">
+            <Button
+              variant="secondary"
+              onClick={closeDeleteModal}
+              disabled={deleting}
+            >
+              {t('common.cancel')}
+            </Button>
+            <Button
+              variant="danger"
+              onClick={handleDeleteAccount}
+              disabled={
+                deleting || !deletePassword || !confirmationMatches
+              }
+            >
+              {deleting
+                ? t('common.loading')
+                : t('settings.deleteAccountConfirmButton')}
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   )
 }
