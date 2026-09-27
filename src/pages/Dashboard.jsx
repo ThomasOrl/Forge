@@ -5,7 +5,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 import { supabase } from "../lib/supabase";
 import StatCard from "../components/ui/StatCard";
 import EmptyState from "../components/ui/EmptyState";
-import { formatVolume, localeFromLang } from "../utils/calculations";
+import { formatVolume } from "../utils/calculations";
 
 export default function Dashboard() {
   const { user, profile } = useAuth();
@@ -21,96 +21,107 @@ export default function Dashboard() {
 
   const [lastWorkout, setLastWorkout] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      setLoadError(false);
+      setStats({
+        workoutCount: 0,
+        exerciseCount: 0,
+        setCount: 0,
+        bestLift: 0,
+      });
+      setLastWorkout(null);
+      setLoading(false);
+      return;
+    }
 
     let mounted = true;
 
     async function load() {
       setLoading(true);
+      setLoadError(false);
 
-      // Séances terminées
-      const [{ data: workouts }, { data: sets }] = await Promise.all([
-        supabase
+      try {
+        const { data: workouts, error: workoutsError } = await supabase
           .from("workouts")
           .select("id, name, date, total_volume")
           .eq("user_id", user.id)
           .eq("status", "completed")
-          .order("date", { ascending: false }),
+          .order("date", { ascending: false })
+          .order("created_at", { ascending: false });
 
-        supabase.from("sets").select("weight").eq("user_id", user.id),
-      ]);
-      if (!mounted) return;
+        if (workoutsError) throw workoutsError;
 
-      const workoutCount = workouts?.length || 0;
+        const completedWorkouts = workouts || [];
+        let workoutExercises = [];
 
-      const setCount = sets?.length || 0;
+        if (completedWorkouts.length > 0) {
+          const workoutIds = completedWorkouts.map((workout) => workout.id);
+          const { data, error } = await supabase
+            .from("workout_exercises")
+            .select("id, exercise_id, workout_id, sets(id, weight)")
+            .eq("user_id", user.id)
+            .in("workout_id", workoutIds);
 
-      const bestLift =
-        sets?.reduce((max, set) => Math.max(max, Number(set.weight) || 0), 0) ||
-        0;
+          if (error) throw error;
+          workoutExercises = data || [];
+        }
 
-      /*
-       * Nombre d'exercices différents réalisés.
-       *
-       * On récupère les exercise_id liés aux séances terminées,
-       * et un Set pour éliminer les doublons.
-       */
-      let exerciseCount = 0;
+        if (!mounted) return;
 
-      if (workouts && workouts.length > 0) {
-        const workoutIds = workouts.map((workout) => workout.id);
-
-        const { data: workoutExercises } = await supabase
-          .from("workout_exercises")
-          .select("exercise_id")
-          .in("workout_id", workoutIds)
-          .eq("user_id", user.id);
-
+        const completedSets = workoutExercises.flatMap(
+          (exercise) => exercise.sets || [],
+        );
         const uniqueExerciseIds = new Set(
-          (workoutExercises || [])
+          workoutExercises
             .map((exercise) => exercise.exercise_id)
             .filter(Boolean),
         );
 
-        exerciseCount = uniqueExerciseIds.size;
-      }
-
-      setStats({
-        workoutCount,
-        exerciseCount,
-        setCount,
-        bestLift,
-      });
-
-      // Dernière séance
-      if (workouts && workouts.length > 0) {
-        const latest = workouts[0];
-
-        const { data: workoutExercises } = await supabase
-          .from("workout_exercises")
-          .select("id, sets(id)")
-          .eq("workout_id", latest.id);
-
-        const latestExerciseCount = workoutExercises?.length || 0;
-
-        const latestSetCount =
-          workoutExercises?.reduce(
-            (sum, exercise) => sum + (exercise.sets?.length || 0),
+        setStats({
+          workoutCount: completedWorkouts.length,
+          exerciseCount: uniqueExerciseIds.size,
+          setCount: completedSets.length,
+          bestLift: completedSets.reduce(
+            (max, set) => Math.max(max, Number(set.weight) || 0),
             0,
-          ) || 0;
+          ),
+        });
+
+        const latest = completedWorkouts[0];
+        if (!latest) {
+          setLastWorkout(null);
+          return;
+        }
+
+        const latestExercises = workoutExercises.filter(
+          (exercise) => exercise.workout_id === latest.id,
+        );
+        const latestSetCount = latestExercises.reduce(
+          (sum, exercise) => sum + (exercise.sets?.length || 0),
+          0,
+        );
 
         setLastWorkout({
           ...latest,
-          exerciseCount: latestExerciseCount,
+          exerciseCount: latestExercises.length,
           setCount: latestSetCount,
         });
-      } else {
+      } catch {
+        if (!mounted) return;
+        setLoadError(true);
+        setStats({
+          workoutCount: 0,
+          exerciseCount: 0,
+          setCount: 0,
+          bestLift: 0,
+        });
         setLastWorkout(null);
+      } finally {
+        if (mounted) setLoading(false);
       }
-
-      setLoading(false);
     }
 
     load();
@@ -121,8 +132,11 @@ export default function Dashboard() {
   }, [user]);
 
   const firstName = profile?.first_name || profile?.username || "";
+  const dateLocale =
+    { fr: "fr-FR", en: "en-US", es: "es-ES", it: "it-IT" }[language] ||
+    "fr-FR";
 
-  const today = new Date().toLocaleDateString(localeFromLang(language), {
+  const today = new Date().toLocaleDateString(dateLocale, {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -141,19 +155,13 @@ export default function Dashboard() {
         <p className="text-xs text-secondary mt-1 capitalize">{today}</p>
       </div>
 
-      {/* Prochaine séance */}
+      {/* Démarrer une séance */}
       <div className="card p-6 mb-8 relative overflow-hidden">
         <p className="text-xs uppercase tracking-wide text-secondary mb-2">
           {t("dashboard.nextWorkout")}
         </p>
 
-        <h2 className="text-2xl font-bold text-primary mb-1">PUSH</h2>
-
-        <p className="text-secondary mb-5">
-          {t("exercises.muscleGroups.chest")} ·{" "}
-          {t("exercises.muscleGroups.shoulders")} ·{" "}
-          {t("exercises.muscleGroups.triceps")}
-        </p>
+        <p className="text-secondary mb-5">{t("dashboard.noNextWorkout")}</p>
 
         <button
           onClick={() => navigate("/workout")}
@@ -168,25 +176,35 @@ export default function Dashboard() {
         {t("dashboard.stats")}
       </h3>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
-        <StatCard
-          label={t("dashboard.totalWorkouts")}
-          value={stats.workoutCount}
-        />
+      {loading ? (
+        <div className="card p-6 mb-8 text-secondary text-sm">
+          {t("common.loading")}
+        </div>
+      ) : loadError ? (
+        <div className="card p-6 mb-8 text-red-400 text-sm" role="alert">
+          {t("auth.errors.generic")}
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
+          <StatCard
+            label={t("dashboard.totalWorkouts")}
+            value={stats.workoutCount}
+          />
 
-        <StatCard
-          label={t("dashboard.exerciseCount")}
-          value={stats.exerciseCount}
-        />
+          <StatCard
+            label={t("dashboard.exerciseCount")}
+            value={stats.exerciseCount}
+          />
 
-        <StatCard label={t("dashboard.totalSets")} value={stats.setCount} />
+          <StatCard label={t("dashboard.totalSets")} value={stats.setCount} />
 
-        <StatCard
-          label={t("dashboard.bestLift")}
-          value={formatVolume(stats.bestLift)}
-          unit={t("common.kg")}
-        />
-      </div>
+          <StatCard
+            label={t("dashboard.bestLift")}
+            value={formatVolume(stats.bestLift)}
+            unit={t("common.kg")}
+          />
+        </div>
+      )}
 
       {/* Dernière séance */}
       <h3 className="text-sm font-semibold text-secondary uppercase tracking-wide mb-3">
@@ -197,7 +215,7 @@ export default function Dashboard() {
         <div className="card p-6 text-secondary text-sm">
           {t("common.loading")}
         </div>
-      ) : lastWorkout ? (
+      ) : loadError ? null : lastWorkout ? (
         <button
           onClick={() => navigate(`/history/${lastWorkout.id}`)}
           className="card p-5 w-full text-left hover:border-accent/30 transition-colors"
@@ -206,13 +224,10 @@ export default function Dashboard() {
             <h4 className="font-bold text-primary">{lastWorkout.name}</h4>
 
             <span className="text-xs text-secondary">
-              {new Date(lastWorkout.date).toLocaleDateString(
-                localeFromLang(language),
-                {
-                  day: "numeric",
-                  month: "short",
-                },
-              )}
+              {new Date(lastWorkout.date).toLocaleDateString(dateLocale, {
+                day: "numeric",
+                month: "short",
+              })}
             </span>
           </div>
 
