@@ -39,17 +39,21 @@ export default function Profile() {
   };
 
   return (
-    <div className="animate-fadeIn max-w-2xl mx-auto">
-      <PageTitle icon="/ForgeIcons/Profile.png" className="mb-6">
-        {t("profile.title")}
-      </PageTitle>
+    <div className="animate-fadeIn max-w-5xl mx-auto">
+      <div className="mb-7">
+        <PageTitle icon="/ForgeIcons/Profile.png">
+          {t("profile.title")}
+        </PageTitle>
+      </div>
 
       <ProfileCard profile={profile} />
 
-      <div className="card p-6 mt-6">
-        <h3 className="font-bold text-primary mb-4">{t("profile.title")}</h3>
+      <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-5 mt-5">
+      <section className="card relative isolate overflow-hidden p-5 sm:p-6 border-accent/15">
+        <div className="absolute -right-12 -top-20 -z-10 w-48 h-48 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
+        <h2 className="relative font-bold text-primary mb-5">{t("profile.personalInfo")}</h2>
 
-        <div className="flex flex-col gap-4">
+        <div className="relative flex flex-col gap-4">
           <Input
             label={t("profile.firstName")}
             value={form.first_name}
@@ -112,24 +116,27 @@ export default function Profile() {
             </select>
           </div>
 
-          <div className="flex items-center gap-3 mt-2">
+          <div className="flex flex-wrap items-center gap-3 mt-2">
             <Button onClick={handleSave} disabled={saving}>
               {saving ? t("common.loading") : t("profile.saveChanges")}
             </Button>
 
             {saved && (
-              <span className="text-sm text-accent">
+              <span className="inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/5 px-3 py-2 text-sm font-medium text-accent">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4" aria-hidden="true">
+                  <path d="m4 10 4 4 8-8" />
+                </svg>
                 {t("profile.changesSaved")}
               </span>
             )}
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="card p-6 mt-6">
-        <h3 className="font-bold text-primary mb-4">
+      <section className="card p-5 sm:p-6 border-accent/15">
+        <h2 className="font-bold text-primary mb-5">
           {t("profile.preferences")}
-        </h3>
+        </h2>
 
         <div className="mb-5">
           <p className="text-sm font-medium text-secondary mb-2">
@@ -144,7 +151,7 @@ export default function Profile() {
             {t("profile.appearance")}
           </p>
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {[
               {
                 value: "dark",
@@ -165,7 +172,7 @@ export default function Profile() {
               <button
                 key={opt.value}
                 onClick={() => setTheme(opt.value)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-btn text-sm font-medium border transition-colors ${
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-btn text-sm font-medium border transition-all hover:-translate-y-0.5 ${
                   theme === opt.value
                     ? "border-accent text-accent bg-accent/10"
                     : "border-app text-secondary hover:text-primary"
@@ -177,6 +184,7 @@ export default function Profile() {
             ))}
           </div>
         </div>
+      </section>
       </div>
     </div>
   );

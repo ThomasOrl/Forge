@@ -6,13 +6,14 @@ export default function ProfileCard({ profile }) {
   const initials = (profile?.first_name?.[0] || profile?.username?.[0] || '?').toUpperCase()
 
   return (
-    <div className="card p-6 flex items-center gap-4 animate-fadeIn">
-      <div className="w-16 h-16 rounded-full bg-accent/10 border border-app flex items-center justify-center text-xl font-bold text-accent overflow-hidden shrink-0">
+    <div className="card relative isolate overflow-hidden p-5 sm:p-6 flex items-center gap-4 sm:gap-5 animate-fadeIn border-accent/20 bg-gradient-to-br from-accent/10 to-transparent">
+      <div className="absolute -right-12 -top-20 -z-10 w-52 h-52 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
+      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center text-xl sm:text-2xl font-bold text-accent overflow-hidden shrink-0 shadow-cardHover">
         {profile?.avatar_url ? (
           <img src={profile.avatar_url} alt="" className="w-full h-full object-cover" />
         ) : initials}
       </div>
-      <div className="min-w-0">
+      <div className="relative min-w-0">
         <h3 className="font-bold text-primary truncate">{profile?.first_name || profile?.username}</h3>
         <p className="text-sm text-secondary truncate">{profile?.email}</p>
         <p className="text-xs text-secondary mt-1">

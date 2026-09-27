@@ -169,8 +169,8 @@ export default function Dashboard() {
       </div>
 
       {/* Démarrer une séance */}
-      <div className="card relative isolate overflow-hidden p-6 sm:p-8 mb-8 border-accent/20 bg-gradient-to-br from-accent/10 to-transparent">
-        <div className="absolute -right-12 -top-20 -z-10 w-64 h-64 rounded-full bg-accent/15 blur-3xl pointer-events-none" />
+      <div className="card relative isolate overflow-hidden p-6 sm:p-8 mb-8 border-accent/15 bg-gradient-to-br from-accent/5 to-transparent">
+        <div className="absolute -right-12 -top-20 -z-10 w-64 h-64 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
         <div className="relative max-w-2xl">
           <p className="text-xs uppercase tracking-[0.18em] font-semibold text-accent mb-3">
             {t("dashboard.nextWorkout")}

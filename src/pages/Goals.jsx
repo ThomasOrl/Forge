@@ -64,28 +64,48 @@ export default function Goals() {
               aria-controls="goal-program-panel"
               aria-selected={isActive}
               onClick={() => setSelectedProgram(program.id)}
-              className={`relative overflow-hidden rounded-card border p-4 sm:p-5 text-left transition-all ${
+              className={`group relative cursor-pointer overflow-hidden rounded-card border p-4 sm:p-5 text-left transition-all ${
                 isActive
-                  ? "border-accent/50 bg-accent/10 shadow-cardHover"
+                  ? "border-accent/50 bg-accent/10"
                   : "border-app bg-app hover:border-accent/25"
               }`}
             >
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${program.accent} pointer-events-none`}
               />
-              <div className="relative flex items-center gap-3">
-                <img
-                  src={program.icon}
-                  alt=""
-                  aria-hidden="true"
-                  className="w-8 h-8 shrink-0 object-contain"
-                />
+              <div className="relative flex items-center justify-between gap-3">
+                <span className="flex min-w-0 items-center gap-3">
+                  <img
+                    src={program.icon}
+                    alt=""
+                    aria-hidden="true"
+                    className="w-8 h-8 shrink-0 object-contain"
+                  />
+                  <span
+                    className={`font-semibold ${
+                      isActive ? "text-accent" : "text-primary"
+                    }`}
+                  >
+                    {t(`goals.${program.id}`)}
+                  </span>
+                </span>
                 <span
-                  className={`font-semibold ${
-                    isActive ? "text-accent" : "text-primary"
+                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-colors ${
+                    isActive
+                      ? "border-accent/25 text-accent"
+                      : "border-app text-secondary"
                   }`}
+                  aria-hidden="true"
                 >
-                  {t(`goals.${program.id}`)}
+                  <svg
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.7"
+                    className="h-4 w-4"
+                  >
+                    <path d="M4 10h11m-4-4 4 4-4 4" />
+                  </svg>
                 </span>
               </div>
             </button>

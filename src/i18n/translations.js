@@ -28,6 +28,7 @@ export const translations = {
       cycle: "Cycle",
       profile: "Profil",
       settings: "Paramètres",
+      more: "Plus",
       logout: "Déconnexion",
     },
     auth: {
@@ -156,7 +157,7 @@ export const translations = {
     },
     cycle: {
       title: "Mon cycle",
-      subtitle: "Suivez votre cycle et son évolution au fil du temps.",
+      subtitle: "Suis ton cycle et son évolution afin d’adapter tes entraînements.",
       currentCycle: "Cycle actuel",
       day: "Jour",
       days: "jours",
@@ -218,6 +219,7 @@ export const translations = {
     },
     profile: {
       title: "Profil",
+      personalInfo: "Informations personnelles",
       memberSince: "Membre depuis",
       changeAvatar: "Changer la photo",
       firstName: "Prénom",
@@ -305,6 +307,7 @@ export const translations = {
       cycle: "Cycle",
       profile: "Profile",
       settings: "Settings",
+      more: "More",
       logout: "Log out",
     },
     auth: {
@@ -430,7 +433,7 @@ export const translations = {
     },
     cycle: {
       title: "My cycle",
-      subtitle: "Track your cycle and how it changes over time.",
+      subtitle: "Track your cycle and its changes to tailor your workouts.",
       currentCycle: "Current cycle",
       day: "Day",
       days: "days",
@@ -491,6 +494,7 @@ export const translations = {
     },
     profile: {
       title: "Profile",
+      personalInfo: "Personal information",
       memberSince: "Member since",
       changeAvatar: "Change photo",
       firstName: "First name",
@@ -577,6 +581,7 @@ export const translations = {
       cycle: "Ciclo",
       profile: "Profilo",
       settings: "Impostazioni",
+      more: "Altro",
       logout: "Disconnetti",
     },
     auth: {
@@ -706,7 +711,7 @@ export const translations = {
     },
     cycle: {
       title: "Il mio ciclo",
-      subtitle: "Segui il tuo ciclo e la sua evoluzione nel tempo.",
+      subtitle: "Segui il tuo ciclo e la sua evoluzione, così da adattare i tuoi allenamenti.",
       currentCycle: "Ciclo attuale",
       day: "Giorno",
       days: "giorni",
@@ -771,6 +776,7 @@ export const translations = {
     },
     profile: {
       title: "Profilo",
+      personalInfo: "Informazioni personali",
       memberSince: "Membro dal",
       changeAvatar: "Cambia foto",
       firstName: "Nome",
@@ -857,6 +863,7 @@ export const translations = {
       cycle: "Ciclo",
       profile: "Perfil",
       settings: "Ajustes",
+      more: "Más",
       logout: "Cerrar sesión",
     },
     auth: {
@@ -984,7 +991,7 @@ export const translations = {
     },
     cycle: {
       title: "Mi ciclo",
-      subtitle: "Sigue tu ciclo y su evolución a lo largo del tiempo.",
+      subtitle: "Sigue tu ciclo y su evolución para adaptar mejor tus entrenamientos.",
       currentCycle: "Ciclo actual",
       day: "Día",
       days: "días",
@@ -1048,6 +1055,7 @@ export const translations = {
     },
     profile: {
       title: "Perfil",
+      personalInfo: "Información personal",
       memberSince: "Miembro desde",
       changeAvatar: "Cambiar foto",
       firstName: "Nombre",
