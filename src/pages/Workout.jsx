@@ -81,8 +81,8 @@ export default function Workout() {
   if (!workout) {
     return (
       <div className="max-w-xl mx-auto mt-6 sm:mt-10 animate-fadeIn">
-        <section className="card relative isolate overflow-hidden p-6 sm:p-8 border-accent/15 bg-gradient-to-br from-accent/5 to-transparent">
-          <div className="absolute -right-16 -top-20 -z-10 w-64 h-64 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
+        <section className="card relative isolate overflow-hidden p-6 sm:p-8 border-accent/10 bg-gradient-to-br from-accent/[0.03] to-transparent">
+          <div className="absolute -right-16 -top-20 -z-10 w-64 h-64 rounded-full bg-accent/5 blur-3xl pointer-events-none" />
           <div className="relative">
             <PageTitle icon="/ForgeIcons/Entrainement.png" className="mb-6">
               {t("workout.newWorkout")}
@@ -119,8 +119,8 @@ export default function Workout() {
   return (
     <>
       <div className="animate-fadeIn max-w-5xl mx-auto pb-6">
-        <div className="card relative isolate overflow-hidden p-5 sm:p-6 mb-6 border-accent/15 bg-gradient-to-br from-accent/5 to-transparent">
-          <div className="absolute -right-12 -top-20 -z-10 w-56 h-56 rounded-full bg-accent/10 blur-3xl pointer-events-none" />
+        <div className="card relative isolate overflow-hidden p-5 sm:p-6 mb-6 border-accent/10 bg-gradient-to-br from-accent/[0.03] to-transparent">
+          <div className="absolute -right-12 -top-20 -z-10 w-56 h-56 rounded-full bg-accent/5 blur-3xl pointer-events-none" />
           <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <PageTitle icon="/ForgeIcons/Entrainement.png">

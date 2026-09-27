@@ -1,7 +1,12 @@
 import { useLanguage } from '../contexts/LanguageContext'
 import { localeFromLang } from '../utils/calculations'
 
-export default function ProfileCard({ profile }) {
+export default function ProfileCard({
+  profile,
+  onChangeAvatar,
+  avatarUploading,
+  avatarError,
+}) {
   const { t, language } = useLanguage()
   const initials = (profile?.first_name?.[0] || profile?.username?.[0] || '?').toUpperCase()
 
@@ -13,12 +18,25 @@ export default function ProfileCard({ profile }) {
           <img src={profile.avatar_url} alt="" className="w-full h-full object-cover" />
         ) : initials}
       </div>
-      <div className="relative min-w-0">
+      <div className="relative min-w-0 flex-1">
         <h3 className="font-bold text-primary truncate">{profile?.first_name || profile?.username}</h3>
         <p className="text-sm text-secondary truncate">{profile?.email}</p>
         <p className="text-xs text-secondary mt-1">
           {t('profile.memberSince')} {profile?.created_at && new Date(profile.created_at).toLocaleDateString(localeFromLang(language), { month: 'long', year: 'numeric' })}
         </p>
+        <button
+          type="button"
+          onClick={onChangeAvatar}
+          disabled={avatarUploading}
+          className="mt-3 inline-flex items-center gap-2 rounded-lg border border-accent/20 bg-accent/5 px-3 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent/10 disabled:cursor-wait disabled:opacity-60"
+        >
+          {avatarUploading ? t('common.loading') : t('profile.changeAvatar')}
+        </button>
+        {avatarError && (
+          <p className="mt-2 text-sm text-red-400" role="alert">
+            {avatarError}
+          </p>
+        )}
       </div>
     </div>
   )

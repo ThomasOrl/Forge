@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "../contexts/ThemeContext";
@@ -7,11 +7,13 @@ import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
 import LanguageSelector from "../components/ui/LanguageSelector";
 import PageTitle from "../components/ui/PageTitle";
+import { supabase } from "../lib/supabase";
 
 export default function Profile() {
-  const { profile, updateProfile } = useAuth();
+  const { user, profile, updateProfile } = useAuth();
   const { t } = useLanguage();
   const { theme, setTheme } = useTheme();
+  const avatarInputRef = useRef(null);
 
   const [form, setForm] = useState({
     first_name: profile?.first_name || "",
@@ -21,6 +23,61 @@ export default function Profile() {
 
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const [avatarError, setAvatarError] = useState("");
+
+  const handleAvatarSelection = async (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+
+    if (!file) return;
+
+    const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
+    if (!allowedTypes.includes(file.type)) {
+      setAvatarError(t("profile.avatarTypeError"));
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      setAvatarError(t("profile.avatarSizeError"));
+      return;
+    }
+
+    if (!user?.id) {
+      setAvatarError(t("profile.avatarUploadError"));
+      return;
+    }
+
+    setAvatarUploading(true);
+    setAvatarError("");
+
+    try {
+      const avatarPath = `${user.id}/avatar`;
+      const { error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(avatarPath, file, {
+          cacheControl: "0",
+          contentType: file.type,
+          upsert: true,
+        });
+
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage
+        .from("avatars")
+        .getPublicUrl(avatarPath);
+      const { error: profileError } = await updateProfile({
+        avatar_url: `${data.publicUrl}?v=${Date.now()}`,
+      });
+
+      if (profileError) throw profileError;
+    } catch (error) {
+      console.error("Avatar upload failed:", error);
+      setAvatarError(t("profile.avatarUploadError"));
+    } finally {
+      setAvatarUploading(false);
+    }
+  };
 
   const handleSave = async () => {
     setSaving(true);
@@ -46,7 +103,19 @@ export default function Profile() {
         </PageTitle>
       </div>
 
-      <ProfileCard profile={profile} />
+      <input
+        ref={avatarInputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        className="hidden"
+        onChange={handleAvatarSelection}
+      />
+      <ProfileCard
+        profile={profile}
+        onChangeAvatar={() => avatarInputRef.current?.click()}
+        avatarUploading={avatarUploading}
+        avatarError={avatarError}
+      />
 
       <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-5 mt-5">
       <section className="card relative isolate overflow-hidden p-5 sm:p-6 border-accent/15">
