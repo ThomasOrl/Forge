@@ -1,2 +1,5 @@
 [functions.delete-account]
 verify_jwt = false
+
+[functions.forge-assistant]
+verify_jwt = true

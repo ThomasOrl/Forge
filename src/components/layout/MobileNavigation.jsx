@@ -45,6 +45,12 @@ const moreItems = [
     labelKey: "nav.goals",
   },
   {
+    to: "/assistant",
+    key: "assistant",
+    icon: "/ForgeIcons/Brain.png",
+    labelKey: "nav.ai",
+  },
+  {
     to: "/cycle",
     key: "cycle",
     icon: "/ForgeIcons/cycle.png",

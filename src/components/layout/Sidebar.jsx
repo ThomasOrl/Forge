@@ -36,6 +36,11 @@ const navItems = [
     icon: "/ForgeIcons/Objectifs.png",
   },
   {
+    to: "/assistant",
+    labelKey: "nav.ai",
+    icon: "/ForgeIcons/Brain.png",
+  },
+  {
     to: "/cycle",
     labelKey: "nav.cycle",
     icon: "/ForgeIcons/cycle.png",
