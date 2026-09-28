@@ -147,7 +147,10 @@ export default function Dashboard() {
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-primary">
-            {t("dashboard.greeting")}, {firstName} 👋
+            {t("dashboard.greeting")}, {firstName}{" "}
+            <span aria-hidden="true" className="wave-on-hover">
+              <span className="wave-hand">👋</span>
+            </span>
           </h1>
           <p className="text-secondary mt-1">{t("dashboard.subtitle")}</p>
         </div>

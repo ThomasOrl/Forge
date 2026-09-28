@@ -332,7 +332,7 @@ export default function Progress() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-2xl border border-red-500/20 bg-red-500/[0.025] p-5 sm:p-6">
+      <section className="card mt-6 p-5 sm:p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h2 className="font-bold text-red-400">
