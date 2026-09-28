@@ -95,6 +95,19 @@ input[type="number"]::-webkit-outer-spin-button {
   @apply border-light-border;
 }
 
+.sidebar-handle-fill {
+  fill: #080808;
+}
+.sidebar-handle-outline {
+  stroke: #262626;
+}
+.light .sidebar-handle-fill {
+  fill: #eeece7;
+}
+.light .sidebar-handle-outline {
+  stroke: #ddd9d2;
+}
+
 /* Workout completion */
 @keyframes forge-hand-wave {
   0%,
