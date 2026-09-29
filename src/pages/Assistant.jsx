@@ -37,6 +37,7 @@ export default function Assistant() {
   const [draft, setDraft] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState("");
+  const [quotaReached, setQuotaReached] = useState(false);
   const bottomRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -44,9 +45,26 @@ export default function Assistant() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
   }, [messages, isSending]);
 
+  useEffect(() => {
+    if (!quotaReached) return undefined;
+
+    const now = new Date();
+    const nextUtcDay = Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate() + 1,
+    );
+    const timeoutId = window.setTimeout(() => {
+      setQuotaReached(false);
+      setError("");
+    }, nextUtcDay - now.getTime());
+
+    return () => window.clearTimeout(timeoutId);
+  }, [quotaReached]);
+
   const sendMessage = async (messageValue = draft) => {
     const message = messageValue.trim();
-    if (!message || isSending) return;
+    if (!message || isSending || quotaReached) return;
 
     setDraft("");
     setError("");
@@ -80,6 +98,10 @@ export default function Assistant() {
         throw new Error(body.error || "assistant_unavailable");
       }
       if (!response.body) throw new Error("assistant_unavailable");
+      const quotaHeader = response.headers.get(
+        "X-Assistant-Questions-Remaining",
+      );
+      const questionsRemaining = quotaHeader === null ? null : Number(quotaHeader);
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -111,9 +133,18 @@ export default function Assistant() {
       }
       if (buffer.trim()) processEvent(buffer);
       if (!answer.trim()) throw new Error("empty_response");
+      if (questionsRemaining === 0) {
+        setQuotaReached(true);
+        setError(t("assistant.dailyQuotaReached"));
+      }
     } catch (sendError) {
       setMessages((current) => current.filter((_, index) => index !== assistantIndex));
-      setError(sendError.message === "ai_not_configured" ? t("assistant.setupError") : t("assistant.error"));
+      if (sendError.message === "daily_quota_reached") {
+        setQuotaReached(true);
+        setError(t("assistant.dailyQuotaReached"));
+      } else {
+        setError(t("assistant.error"));
+      }
     } finally {
       setIsSending(false);
       inputRef.current?.focus();
@@ -153,19 +184,6 @@ export default function Assistant() {
               </span>
               <h2 className="text-xl font-bold text-primary">{t("assistant.welcomeTitle")}</h2>
               <p className="mt-2 text-sm text-secondary">{t("assistant.welcomeText")}</p>
-              <div className="mt-6 flex flex-wrap justify-center gap-2">
-                {t("assistant.suggestions").map((suggestion) => (
-                  <button
-                    key={suggestion}
-                    type="button"
-                    onClick={() => sendMessage(suggestion)}
-                    disabled={isSending}
-                    className="rounded-full border border-app bg-app/70 px-3 py-2 text-left text-xs text-secondary transition-colors hover:border-accent/30 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50"
-                  >
-                    {suggestion}
-                  </button>
-                ))}
-              </div>
             </div>
           ) : (
             messages.map((message, index) => (
@@ -184,6 +202,24 @@ export default function Assistant() {
           className="relative border-t border-app p-3 sm:p-4"
           onSubmit={(event) => { event.preventDefault(); sendMessage(); }}
         >
+          <p className="mb-2 px-1 text-xs text-secondary">{t("assistant.faqOnly")}</p>
+          <div
+            role="group"
+            aria-label={t("assistant.faqLabel")}
+            className="mb-3 -mx-1 flex gap-2 overflow-x-auto px-1 pb-1"
+          >
+            {t("assistant.suggestions").map((suggestion) => (
+              <button
+                key={suggestion}
+                type="button"
+                onClick={() => sendMessage(suggestion)}
+                disabled={isSending || quotaReached}
+                className="shrink-0 rounded-full border border-app bg-app/70 px-3 py-2 text-left text-xs text-secondary transition-colors hover:border-accent/30 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50"
+              >
+                {suggestion}
+              </button>
+            ))}
+          </div>
           <label htmlFor="assistant-prompt" className="sr-only">{t("assistant.placeholder")}</label>
           <div className="flex items-end gap-2 rounded-2xl border border-app bg-app p-2 focus-within:border-accent/40">
             <textarea
@@ -192,6 +228,7 @@ export default function Assistant() {
               rows={1}
               maxLength={1000}
               value={draft}
+              disabled={quotaReached}
               onChange={(event) => setDraft(event.target.value)}
               onKeyDown={(event) => {
                 if (event.key === "Enter" && !event.shiftKey) {
@@ -199,12 +236,12 @@ export default function Assistant() {
                   sendMessage();
                 }
               }}
-              placeholder={t("assistant.placeholder")}
+              placeholder={quotaReached ? t("assistant.dailyQuotaPlaceholder") : t("assistant.placeholder")}
               className="max-h-32 min-h-10 flex-1 resize-y bg-transparent px-2 py-2 text-sm text-primary outline-none placeholder:text-secondary/70"
             />
             <button
               type="submit"
-              disabled={!draft.trim() || isSending}
+              disabled={!draft.trim() || isSending || quotaReached}
               aria-label={t("assistant.send")}
               className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent text-black transition-colors hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-40"
             >

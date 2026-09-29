@@ -8,6 +8,7 @@ create table public.profiles (
   email text not null,
   username text not null,
   first_name text,
+  sex text check (sex is null or sex in ('male', 'female')),
   avatar_url text,
   language text not null default 'fr' check (language in ('fr','en','es','it')),
   theme text not null default 'dark' check (theme in ('dark','light','system')),
@@ -94,6 +95,55 @@ create table public.menstrual_cycles (
   constraint menstrual_cycles_valid_dates
     check (end_date is null or end_date >= start_date)
 );
+
+-- One row per user; the counter resets automatically when the UTC date changes.
+create table public.assistant_daily_usage (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  usage_date date not null,
+  question_count integer not null check (question_count between 1 and 10)
+);
+
+alter table public.assistant_daily_usage enable row level security;
+revoke all on table public.assistant_daily_usage from public, anon, authenticated;
+
+create or replace function public.consume_assistant_question()
+returns integer
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  current_user_id uuid := auth.uid();
+  questions_remaining integer := -1;
+  today_utc date := (now() at time zone 'utc')::date;
+begin
+  if current_user_id is null then
+    return -1;
+  end if;
+
+  insert into public.assistant_daily_usage as daily_usage (
+    user_id,
+    usage_date,
+    question_count
+  )
+  values (current_user_id, today_utc, 1)
+  on conflict (user_id) do update
+    set usage_date = excluded.usage_date,
+        question_count = case
+          when daily_usage.usage_date = excluded.usage_date
+            then daily_usage.question_count + 1
+          else 1
+        end
+    where daily_usage.usage_date <> excluded.usage_date
+       or daily_usage.question_count < 10
+  returning 10 - daily_usage.question_count into questions_remaining;
+
+  return questions_remaining;
+end;
+$$;
+
+revoke all on function public.consume_assistant_question() from public, anon;
+grant execute on function public.consume_assistant_question() to authenticated;
 
 create index idx_menstrual_cycles_user_date
   on public.menstrual_cycles(user_id, start_date desc);

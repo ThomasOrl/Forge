@@ -130,6 +130,15 @@ export default function Login() {
               {t("auth.createAccount")}
             </Link>
           </p>
+
+          <p className="text-sm text-center mt-4">
+            <Link
+              to="/preview"
+              className="text-secondary hover:text-accent transition-colors"
+            >
+              {t("preview.exploreWithoutAccount")}
+            </Link>
+          </p>
         </div>
 
         <div className="flex justify-center mt-6">

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "../contexts/ThemeContext";
@@ -20,6 +20,17 @@ export default function Profile() {
     username: profile?.username || "",
     sex: profile?.sex || "",
   });
+  const [formEdited, setFormEdited] = useState(false);
+
+  useEffect(() => {
+    if (!profile || formEdited) return;
+
+    setForm({
+      first_name: profile.first_name || "",
+      username: profile.username || "",
+      sex: profile.sex || "",
+    });
+  }, [profile, formEdited]);
 
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -127,10 +138,10 @@ export default function Profile() {
             label={t("profile.firstName")}
             value={form.first_name}
             onChange={(e) =>
-              setForm((f) => ({
-                ...f,
-                first_name: e.target.value,
-              }))
+              {
+                setFormEdited(true);
+                setForm((f) => ({ ...f, first_name: e.target.value }));
+              }
             }
           />
 
@@ -138,10 +149,10 @@ export default function Profile() {
             label={t("profile.username")}
             value={form.username}
             onChange={(e) =>
-              setForm((f) => ({
-                ...f,
-                username: e.target.value,
-              }))
+              {
+                setFormEdited(true);
+                setForm((f) => ({ ...f, username: e.target.value }));
+              }
             }
           />
 
@@ -164,10 +175,10 @@ export default function Profile() {
               id="profile-sex"
               value={form.sex}
               onChange={(e) =>
-                setForm((f) => ({
-                  ...f,
-                  sex: e.target.value,
-                }))
+                {
+                  setFormEdited(true);
+                  setForm((f) => ({ ...f, sex: e.target.value }));
+                }
               }
               className="w-full px-4 py-3 rounded-btn bg-transparent border border-app text-primary focus:outline-none focus:ring-1 focus:ring-accent"
             >

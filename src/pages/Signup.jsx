@@ -147,6 +147,15 @@ export default function Signup() {
               {t("auth.login")}
             </Link>
           </p>
+
+          <p className="text-sm text-center mt-4">
+            <Link
+              to="/preview"
+              className="text-secondary hover:text-accent transition-colors"
+            >
+              {t("preview.exploreWithoutAccount")}
+            </Link>
+          </p>
         </div>
       </div>
 

@@ -24,7 +24,7 @@ export default function AppLayout() {
                 <span aria-hidden="true"> · </span>
                 {t("footer.author")}
                 <span aria-hidden="true"> · </span>
-                Thomas Orls
+                Thomas Orlans
               </p>
             </div>
 
