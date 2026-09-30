@@ -131,7 +131,6 @@ export default function Sidebar() {
         </button>
       </div>
 
-      {/* Logo */}
       <div
         className={`mb-8 flex items-center transition-[gap,padding] duration-300 ${
           collapsed ? "gap-0 px-2" : "gap-2 px-3"
@@ -156,7 +155,6 @@ export default function Sidebar() {
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto">
-        {/* Navigation principale */}
         <nav aria-label={t("nav.primary")} className="flex flex-col gap-1">
           {navItems
             .filter((item) => item.to !== "/cycle" || profile?.sex === "female")
@@ -191,7 +189,6 @@ export default function Sidebar() {
 
         <div className="my-3 h-px shrink-0 bg-app" />
 
-        {/* Navigation secondaire */}
         <nav aria-label={t("nav.account")} className="flex flex-col gap-1">
           {secondaryNavItems.map((item, index) => (
             <NavLink
@@ -222,7 +219,6 @@ export default function Sidebar() {
         </nav>
       </div>
 
-      {/* Langue + thème */}
       <div
         className={`mt-auto flex shrink-0 pt-4 ${
           collapsed ? "flex-col items-center gap-1" : "items-center gap-2"

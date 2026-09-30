@@ -34,5 +34,5 @@ export function isNewPersonalRecord(previousBest, weight) {
 }
 
 export function localeFromLang(lang) {
-  return { fr: 'fr-FR', en: 'en-US', es: 'es-ES' }[lang] || 'fr-FR'
+  return { fr: 'fr-FR', en: 'en-US', es: 'es-ES', it: 'it-IT' }[lang] || 'fr-FR'
 }

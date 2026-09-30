@@ -37,7 +37,7 @@ export function ThemeProvider({ children }) {
         await supabase.from('profiles').update({ theme: value }).eq('id', user.id)
       }
     } catch {
-      // silencieux
+      return
     }
   }, [])
 

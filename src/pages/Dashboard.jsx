@@ -143,7 +143,6 @@ export default function Dashboard() {
 
   return (
     <div className="animate-fadeIn max-w-6xl mx-auto">
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-primary">
@@ -171,7 +170,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Démarrer une séance */}
       <div className="card relative isolate overflow-hidden p-6 sm:p-8 mb-8 border-accent/10 bg-gradient-to-br from-accent/[0.03] to-transparent">
         <div className="absolute -right-12 -top-20 -z-10 w-64 h-64 rounded-full bg-accent/5 blur-3xl pointer-events-none" />
         <div className="relative max-w-2xl">
@@ -201,7 +199,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Statistiques */}
       <div className="flex items-center gap-3 mb-3">
         <h2 className="text-sm font-semibold text-secondary uppercase tracking-wide">
           {t("dashboard.stats")}
@@ -246,7 +243,6 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Dernière séance */}
       <div className="flex items-center gap-3 mb-3">
         <h2 className="text-sm font-semibold text-secondary uppercase tracking-wide">
           {t("dashboard.lastWorkout")}

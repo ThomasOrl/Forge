@@ -68,7 +68,6 @@ export default function Cycle() {
   return (
     <div className="relative animate-fadeIn max-w-5xl mx-auto pb-8 overflow-visible">
       <CycleFlower />
-      {/* Fleur organique décorative */}
 
       <CyclePageHeader t={t} />
 
