@@ -85,14 +85,14 @@ export default function MobileNavigation() {
 
   return (
     <>
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-dark-card/95 backdrop-blur border-t border-app flex items-center justify-around px-2 py-2 pb-[calc(env(safe-area-inset-bottom)+8px)]">
+      <nav className="md:hidden fixed inset-x-0 bottom-0 z-30 grid w-screen max-w-[100vw] grid-cols-4 items-stretch gap-0 border-t border-app bg-dark-card/95 px-1 pt-2 pb-[calc(env(safe-area-inset-bottom,0px)+0.5rem)] backdrop-blur">
         {primaryItems.map((item) => (
           <NavLink
             key={item.key}
             to={item.to}
             end={item.to === "/"}
             className={({ isActive }) =>
-              `flex flex-1 min-w-0 flex-col items-center gap-1 px-1 py-1.5 rounded-btn text-[11px] leading-tight text-center font-medium transition-colors ${
+              `flex w-full min-w-0 flex-col items-center gap-1 rounded-btn px-1 py-1.5 text-center text-[11px] leading-tight font-medium transition-colors ${
                 isActive ? "text-accent" : "text-secondary"
               }`
             }
@@ -107,7 +107,7 @@ export default function MobileNavigation() {
           aria-expanded={moreOpen}
           aria-controls="mobile-more-menu"
           onClick={() => setMoreOpen(true)}
-          className={`flex flex-1 min-w-0 flex-col items-center gap-1 px-1 py-1.5 rounded-btn text-[11px] leading-tight text-center font-medium transition-colors ${
+          className={`flex w-full min-w-0 flex-col items-center gap-1 rounded-btn px-1 py-1.5 text-center text-[11px] leading-tight font-medium transition-colors ${
             isMoreActive || moreOpen ? "text-accent" : "text-secondary"
           }`}
         >

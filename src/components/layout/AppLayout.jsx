@@ -11,7 +11,7 @@ export default function AppLayout() {
       <Sidebar />
 
       <div className="flex-1 min-w-0 min-h-screen flex flex-col">
-        <main className="flex-1 max-w-[1200px] w-full mx-auto px-4 sm:px-6 py-6 pb-24 md:pb-10">
+        <main className="flex-1 max-w-[1200px] w-full mx-auto px-4 sm:px-6 py-6 pb-[calc(6rem+env(safe-area-inset-bottom,0px))] md:pb-10">
           <Outlet />
         </main>
 

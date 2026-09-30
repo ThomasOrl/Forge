@@ -452,7 +452,11 @@ begin
       split_part(new.email, '@', 1)
     ),
     coalesce(new.raw_user_meta_data->>'first_name', ''),
-    'fr',
+    case
+      when new.raw_user_meta_data->>'language' in ('fr', 'en', 'es', 'it')
+        then new.raw_user_meta_data->>'language'
+      else 'fr'
+    end,
     'dark'
   );
 

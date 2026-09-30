@@ -66,7 +66,7 @@ export default function Cycle() {
   }
 
   return (
-    <div className="relative animate-fadeIn max-w-5xl mx-auto pb-8 overflow-visible">
+    <div className="relative animate-fadeIn max-w-5xl mx-auto pb-8 overflow-x-clip md:overflow-x-visible">
       <CycleFlower />
 
       <CyclePageHeader t={t} />
