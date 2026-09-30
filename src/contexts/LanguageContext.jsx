@@ -18,14 +18,28 @@ export function LanguageProvider({ children }) {
       if (user) {
         await supabase.from('profiles').update({ language: lang }).eq('id', user.id)
       }
-    } catch (e) {
+    } catch {
       // silencieux : la préférence locale reste valide même hors ligne
     }
   }, [])
 
   useEffect(() => {
     document.documentElement.lang = language
-  }, [language])
+    const title = t('seo.title')
+    const description = t('seo.description')
+    document.title = title
+
+    const updateMeta = (selector, content) => {
+      const element = document.querySelector(selector)
+      if (element) element.setAttribute('content', content)
+    }
+
+    updateMeta('meta[name="description"]', description)
+    updateMeta('meta[property="og:title"]', title)
+    updateMeta('meta[property="og:description"]', description)
+    updateMeta('meta[name="twitter:title"]', title)
+    updateMeta('meta[name="twitter:description"]', description)
+  }, [language, t])
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>

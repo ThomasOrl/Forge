@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLanguage } from "../../contexts/LanguageContext";
 
 function parseDate(value) {
@@ -88,7 +88,7 @@ export default function DatePicker({
 
   const containerRef = useRef(null);
 
-  const selectedDate = parseDate(value);
+  const selectedDate = useMemo(() => parseDate(value), [value]);
   const minDate = parseDate(min);
 
   const [open, setOpen] = useState(false);
@@ -99,7 +99,7 @@ export default function DatePicker({
     if (selectedDate) {
       setVisibleDate(selectedDate);
     }
-  }, [value]);
+  }, [selectedDate]);
 
   useEffect(() => {
     function handleClickOutside(event) {

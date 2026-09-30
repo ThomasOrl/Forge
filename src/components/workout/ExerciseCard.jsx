@@ -37,7 +37,7 @@ export default function ExerciseCard({ workoutExercise, onAddSet, onUpdateSet, o
         </button>
         {sets.length > 0 && (
           <span className="text-xs text-secondary">
-            Volume: <span className="font-semibold text-primary">{formatVolume(volume)} {t('common.kg')}</span>
+            {t("common.volume")}: <span className="font-semibold text-primary">{formatVolume(volume)} {t('common.kg')}</span>
           </span>
         )}
       </div>

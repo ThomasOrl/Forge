@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Forge Your Body — confirmation du compte</title>
+  </head>
+  <body style="margin:0;padding:32px 16px;background:#f4f2f7;font-family:Arial,Helvetica,sans-serif;color:#211b27;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #e8e2ed;border-radius:18px;overflow:hidden;">
+      <tr>
+        <td style="padding:28px 32px;background:#17121c;border-bottom:3px solid #8b3fd1;">
+          <p style="margin:0;color:#ffffff;font-size:21px;font-weight:700;letter-spacing:.4px;">FORGE <span style="color:#bd79f2;">YOUR BODY</span></p>
+          <p style="margin:7px 0 0;color:#c9bfce;font-size:13px;">
+            {{ if eq .Data.language "en" }}Training · progress · goals{{ else if eq .Data.language "it" }}Allenamento · progressi · obiettivi{{ else if eq .Data.language "es" }}Entrenamiento · progreso · objetivos{{ else }}Entraînement · progression · objectifs{{ end }}
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:36px 32px 28px;">
+          {{ if eq .Data.language "en" }}
+            <p style="margin:0 0 10px;color:#8b3fd1;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">Forge Your Body</p>
+            <h1 style="margin:0 0 16px;font-size:26px;line-height:1.25;color:#211b27;">Confirm your email address</h1>
+            <p style="margin:0 0 26px;color:#514957;font-size:16px;line-height:1.65;">You’re creating a Forge Your Body account. Confirm this email address to finish signing up and start using the app.</p>
+            <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 22px;border-radius:10px;background:#7131a8;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;">Confirm my email</a>
+            <p style="margin:26px 0 0;color:#756d7b;font-size:13px;line-height:1.6;">If you didn’t create a Forge Your Body account, you can ignore this email.</p>
+          {{ else if eq .Data.language "it" }}
+            <p style="margin:0 0 10px;color:#8b3fd1;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">Forge Your Body</p>
+            <h1 style="margin:0 0 16px;font-size:26px;line-height:1.25;color:#211b27;">Conferma il tuo indirizzo email</h1>
+            <p style="margin:0 0 26px;color:#514957;font-size:16px;line-height:1.65;">Stai creando un account Forge Your Body. Conferma questo indirizzo email per completare la registrazione e iniziare a usare l’app.</p>
+            <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 22px;border-radius:10px;background:#7131a8;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;">Conferma la mia email</a>
+            <p style="margin:26px 0 0;color:#756d7b;font-size:13px;line-height:1.6;">Se non hai creato un account Forge Your Body, puoi ignorare questa email.</p>
+          {{ else if eq .Data.language "es" }}
+            <p style="margin:0 0 10px;color:#8b3fd1;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">Forge Your Body</p>
+            <h1 style="margin:0 0 16px;font-size:26px;line-height:1.25;color:#211b27;">Confirma tu dirección de correo</h1>
+            <p style="margin:0 0 26px;color:#514957;font-size:16px;line-height:1.65;">Estás creando una cuenta de Forge Your Body. Confirma esta dirección de correo para terminar el registro y empezar a usar la aplicación.</p>
+            <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 22px;border-radius:10px;background:#7131a8;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;">Confirmar mi correo</a>
+            <p style="margin:26px 0 0;color:#756d7b;font-size:13px;line-height:1.6;">Si no has creado una cuenta de Forge Your Body, puedes ignorar este correo.</p>
+          {{ else }}
+            <p style="margin:0 0 10px;color:#8b3fd1;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">Forge Your Body</p>
+            <h1 style="margin:0 0 16px;font-size:26px;line-height:1.25;color:#211b27;">Confirmez votre adresse e-mail</h1>
+            <p style="margin:0 0 26px;color:#514957;font-size:16px;line-height:1.65;">Vous créez un compte Forge Your Body. Confirmez cette adresse e-mail pour terminer votre inscription et commencer à utiliser l’application.</p>
+            <a href="{{ .ConfirmationURL }}" style="display:inline-block;padding:14px 22px;border-radius:10px;background:#7131a8;color:#ffffff;text-decoration:none;font-size:15px;font-weight:700;">Confirmer mon adresse e-mail</a>
+            <p style="margin:26px 0 0;color:#756d7b;font-size:13px;line-height:1.6;">Si vous n’êtes pas à l’origine de cette inscription à Forge Your Body, vous pouvez ignorer cet e-mail.</p>
+          {{ end }}
+
+          <p style="margin:28px 0 0;padding-top:20px;border-top:1px solid #eee9f1;color:#8a828f;font-size:12px;line-height:1.6;">
+            {{ if eq .Data.language "en" }}If the button doesn’t work, copy and paste this address into your browser:{{ else if eq .Data.language "it" }}Se il pulsante non funziona, copia e incolla questo indirizzo nel browser:{{ else if eq .Data.language "es" }}Si el botón no funciona, copia y pega esta dirección en tu navegador:{{ else }}Si le bouton ne fonctionne pas, copiez et collez cette adresse dans votre navigateur :{{ end }}
+            <br /><a href="{{ .ConfirmationURL }}" style="color:#7131a8;word-break:break-all;">{{ .ConfirmationURL }}</a>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:18px 32px;background:#faf9fb;color:#817987;font-size:12px;line-height:1.6;">
+          {{ if eq .Data.language "en" }}Forge Your Body · This email is for account confirmation, not marketing.{{ else if eq .Data.language "it" }}Forge Your Body · Questa email serve a confermare il tuo account, non è un messaggio promozionale.{{ else if eq .Data.language "es" }}Forge Your Body · Este correo confirma tu cuenta; no es un mensaje publicitario.{{ else }}Forge Your Body · Cet e-mail confirme un compte ; il ne s’agit pas d’un message publicitaire.{{ end }}
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

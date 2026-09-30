@@ -1,7 +1,12 @@
 export const translations = {
   fr: {
+    seo: {
+      title: "Forge Your Body — entraînement et progression",
+      description: "Forge Your Body vous aide à organiser vos séances, suivre vos exercices et visualiser votre progression.",
+    },
     common: {
       appName: "Forge",
+      retry: "Réessayer",
       loading: "Chargement…",
       save: "Enregistrer",
       cancel: "Annuler",
@@ -13,6 +18,7 @@ export const translations = {
       changeTheme: "Changer de thème",
       confirm: "Confirmer",
       kg: "kg",
+      volume: "Volume",
       reps: "répétitions",
       sets: "séries",
       exercises: "exercices",
@@ -167,6 +173,7 @@ export const translations = {
       set: "Série",
       weight: "Poids",
       repetitions: "Répétitions",
+      deleteSet: "Supprimer la série",
       finishWorkout: "Terminer la séance",
       workoutCompleted: "Séance terminée",
       summary: "Résumé",
@@ -213,9 +220,13 @@ export const translations = {
         "Commencez votre première séance pour commencer à suivre votre progression.",
       startFirstWorkout: "Commencer une séance",
       totalVolume: "Volume total",
+      loadMore: "Charger plus de séances",
+      loadingMore: "Chargement…",
+      loadError: "Impossible de charger l’historique. Réessaie.",
     },
     progress: {
       title: "Progression",
+      loadError: "Impossible de charger toutes les données de progression.",
       volumeOverTime: "Volume par semaine",
       workoutCount: "Nombre de séances",
       maxWeight: "Poids maximal",
@@ -256,7 +267,6 @@ export const translations = {
       endDateNotProvided: "Fin non renseignée",
       until: "jusqu'au",
       save: "Enregistrer le cycle",
-      day: "Jour",
       of: "sur",
       phaseDays: "Jours",
       addDescription:
@@ -379,8 +389,13 @@ export const translations = {
   },
 
   en: {
+    seo: {
+      title: "Forge Your Body — workouts and progress",
+      description: "Forge Your Body helps you organize workouts, track exercises, and follow your progress.",
+    },
     common: {
       appName: "Forge",
+      retry: "Retry",
       loading: "Loading…",
       save: "Save",
       cancel: "Cancel",
@@ -392,6 +407,7 @@ export const translations = {
       changeTheme: "Change theme",
       confirm: "Confirm",
       kg: "kg",
+      volume: "Volume",
       reps: "reps",
       sets: "sets",
       exercises: "exercises",
@@ -544,6 +560,7 @@ export const translations = {
       set: "Set",
       weight: "Weight",
       repetitions: "Reps",
+      deleteSet: "Delete set",
       finishWorkout: "Finish workout",
       workoutCompleted: "Workout completed",
       summary: "Summary",
@@ -589,9 +606,13 @@ export const translations = {
       emptyText: "Start your first workout to begin tracking your progress.",
       startFirstWorkout: "Start a workout",
       totalVolume: "Total volume",
+      loadMore: "Load more workouts",
+      loadingMore: "Loading…",
+      loadError: "Could not load workout history. Try again.",
     },
     progress: {
       title: "Progress",
+      loadError: "Could not load all progress data.",
       volumeOverTime: "Weekly volume",
       workoutCount: "Number of workouts",
       maxWeight: "Max weight",
@@ -632,7 +653,6 @@ export const translations = {
       endDateNotProvided: "End date not provided",
       until: "until",
       save: "Save cycle",
-      day: "Day",
       of: "of",
       phaseDays: "Days",
       addDescription:
@@ -753,8 +773,13 @@ export const translations = {
     },
   },
   it: {
+    seo: {
+      title: "Forge Your Body — allenamenti e progressi",
+      description: "Forge Your Body ti aiuta a organizzare gli allenamenti, seguire gli esercizi e monitorare i progressi.",
+    },
     common: {
       appName: "Forge",
+      retry: "Riprova",
       loading: "Caricamento…",
       save: "Salva",
       cancel: "Annulla",
@@ -766,6 +791,7 @@ export const translations = {
       changeTheme: "Cambia tema",
       confirm: "Conferma",
       kg: "kg",
+      volume: "Volume",
       reps: "ripetizioni",
       sets: "serie",
       exercises: "esercizi",
@@ -920,6 +946,7 @@ export const translations = {
       set: "Serie",
       weight: "Peso",
       repetitions: "Ripetizioni",
+      deleteSet: "Elimina serie",
       finishWorkout: "Termina allenamento",
       workoutCompleted: "Allenamento completato",
       summary: "Riepilogo",
@@ -966,9 +993,13 @@ export const translations = {
         "Inizia il tuo primo allenamento per iniziare a monitorare i tuoi progressi.",
       startFirstWorkout: "Inizia un allenamento",
       totalVolume: "Volume totale",
+      loadMore: "Carica altri allenamenti",
+      loadingMore: "Caricamento…",
+      loadError: "Impossibile caricare la cronologia. Riprova.",
     },
     progress: {
       title: "Progressi",
+      loadError: "Impossibile caricare tutti i dati dei progressi.",
       volumeOverTime: "Volume settimanale",
       workoutCount: "Numero di allenamenti",
       maxWeight: "Peso massimo",
@@ -1010,7 +1041,6 @@ export const translations = {
       endDateNotProvided: "Fine non indicata",
       until: "fino al",
       save: "Salva il ciclo",
-      day: "Giorno",
       of: "su",
       phaseDays: "Giorni",
       addDescription:
@@ -1135,8 +1165,13 @@ export const translations = {
     },
   },
   es: {
+    seo: {
+      title: "Forge Your Body — entrenamientos y progreso",
+      description: "Forge Your Body te ayuda a organizar tus entrenamientos, seguir tus ejercicios y consultar tu progreso.",
+    },
     common: {
       appName: "Forge",
+      retry: "Reintentar",
       loading: "Cargando…",
       save: "Guardar",
       cancel: "Cancelar",
@@ -1148,6 +1183,7 @@ export const translations = {
       changeTheme: "Cambiar tema",
       confirm: "Confirmar",
       kg: "kg",
+      volume: "Volumen",
       reps: "repeticiones",
       sets: "series",
       exercises: "ejercicios",
@@ -1301,6 +1337,7 @@ export const translations = {
       set: "Serie",
       weight: "Peso",
       repetitions: "Repeticiones",
+      deleteSet: "Eliminar serie",
       finishWorkout: "Terminar entrenamiento",
       workoutCompleted: "Entrenamiento completado",
       summary: "Resumen",
@@ -1347,9 +1384,13 @@ export const translations = {
         "Comienza tu primer entrenamiento para empezar a seguir tu progreso.",
       startFirstWorkout: "Comenzar un entrenamiento",
       totalVolume: "Volumen total",
+      loadMore: "Cargar más entrenamientos",
+      loadingMore: "Cargando…",
+      loadError: "No se pudo cargar el historial. Inténtalo de nuevo.",
     },
     progress: {
       title: "Progreso",
+      loadError: "No se pudieron cargar todos los datos del progreso.",
       volumeOverTime: "Volumen semanal",
       workoutCount: "Número de entrenamientos",
       maxWeight: "Peso máximo",
@@ -1390,7 +1431,6 @@ export const translations = {
       endDateNotProvided: "Fecha de finalización no indicada",
       until: "hasta",
       save: "Guardar ciclo",
-      day: "Día",
       of: "de",
       phaseDays: "Días",
       addDescription:

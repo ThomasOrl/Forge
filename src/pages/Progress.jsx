@@ -10,6 +10,7 @@ import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import Modal from "../components/ui/Modal";
 import { formatVolume, localeFromLang } from "../utils/calculations";
+import { fetchAllRows } from "../utils/fetchAllRows";
 
 export default function Progress() {
   const { user } = useAuth();
@@ -22,6 +23,7 @@ export default function Progress() {
   const [exerciseSets, setExerciseSets] = useState([]);
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [refreshVersion, setRefreshVersion] = useState(0);
   const [cleanupOpen, setCleanupOpen] = useState(false);
   const [cleanupLoading, setCleanupLoading] = useState(false);
@@ -42,24 +44,35 @@ export default function Progress() {
 
     async function load() {
       setLoading(true);
+      setLoadError(false);
 
-      const { data: workoutsData } = await supabase
-        .from("workouts")
-        .select("id, date, total_volume")
-        .eq("user_id", user.id)
-        .eq("status", "completed")
-        .order("date", { ascending: true });
-
-      const { data: workoutExercises } = await supabase
-        .from("workout_exercises")
-        .select("sets(weight)")
-        .eq("user_id", user.id);
+      const [workoutsResult, exercisesResult] = await Promise.all([
+        fetchAllRows(() => supabase
+          .from("workouts")
+          .select("id, date, total_volume")
+          .eq("user_id", user.id)
+          .eq("status", "completed")
+          .order("date", { ascending: true })),
+        fetchAllRows(() => supabase
+          .from("workout_exercises")
+          .select("sets(weight)")
+          .eq("user_id", user.id)),
+      ]);
 
       if (!mounted) return;
 
+      if (workoutsResult.error || exercisesResult.error) {
+        setLoadError(true);
+        setLoading(false);
+        return;
+      }
+
+      const workoutsData = workoutsResult.data;
+      const workoutExercises = exercisesResult.data;
+
       setWorkouts(workoutsData || []);
 
-      const maxWeight = (workoutExercises || []).reduce(
+      const maxWeight = workoutExercises.reduce(
         (max, workoutExercise) => {
           const exerciseMax = (workoutExercise.sets || []).reduce(
             (setMax, set) => Math.max(setMax, Number(set.weight) || 0),
@@ -91,14 +104,21 @@ export default function Progress() {
     let mounted = true;
 
     async function loadExerciseProgress() {
-      const { data: we } = await supabase
+      setLoadError(false);
+      const { data: we, error } = await fetchAllRows(() => supabase
         .from("workout_exercises")
         .select("id, workouts(date), sets(weight, repetitions)")
         .eq("exercise_id", selectedExerciseId)
         .eq("user_id", user.id)
-        .order("created_at", { ascending: true });
+        .order("created_at", { ascending: true }));
 
-      if (!mounted || !we) return;
+      if (!mounted) return;
+      if (error) {
+        setLoadError(true);
+        setExerciseSets([]);
+        setRecords([]);
+        return;
+      }
 
       const points = we
         .filter((w) => w.workouts)
@@ -231,6 +251,19 @@ export default function Progress() {
           {t("progress.title")}
         </PageTitle>
       </div>
+
+      {loadError && (
+        <div className="mb-5 rounded-xl border border-red-500/20 bg-red-500/5 p-4 text-sm text-red-400" role="alert">
+          <p>{t("progress.loadError")}</p>
+          <button
+            type="button"
+            className="mt-2 underline underline-offset-2"
+            onClick={() => setRefreshVersion((version) => version + 1)}
+          >
+            {t("common.retry")}
+          </button>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
         <StatCard

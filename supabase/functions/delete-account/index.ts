@@ -109,6 +109,16 @@ Deno.serve(async (request) => {
   const adminClient = createClient(supabaseUrl, serviceRoleKey, {
     auth: { autoRefreshToken: false, persistSession: false },
   });
+
+  const { error: avatarDeleteError } = await adminClient.storage
+    .from("avatars")
+    .remove([`${data.user.id}/avatar`]);
+
+  if (avatarDeleteError) {
+    console.error("delete-account: avatar cleanup failed", avatarDeleteError.message);
+    return jsonResponse(500, { error: "account_deletion_failed" });
+  }
+
   const { error: deleteError } = await adminClient.auth.admin.deleteUser(
     data.user.id,
   );

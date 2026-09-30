@@ -8,7 +8,7 @@ import PageTitle from "../components/ui/PageTitle";
 
 export default function Signup() {
   const { signUp } = useAuth();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -47,6 +47,7 @@ export default function Signup() {
       password: form.password,
       username: form.username,
       firstName: form.username,
+      language,
     });
     setLoading(false);
     if (error) {

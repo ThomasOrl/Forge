@@ -10,6 +10,7 @@ export default function SetRow({ set, onUpdate, onDelete }) {
         <input
           type="number"
           inputMode="decimal"
+          aria-label={`${t("workout.set")} ${set.set_number} — ${t("workout.weight")}`}
           value={set.weight}
           onChange={(e) => onUpdate({ ...set, weight: e.target.value })}
           className="w-full px-3 py-2.5 rounded-btn bg-dark-cardAlt border border-app text-center text-primary font-semibold focus:outline-none focus:ring-1 focus:ring-accent"
@@ -21,12 +22,20 @@ export default function SetRow({ set, onUpdate, onDelete }) {
         <input
           type="number"
           inputMode="numeric"
+          aria-label={`${t("workout.set")} ${set.set_number} — ${t("workout.repetitions")}`}
           value={set.repetitions}
           onChange={(e) => onUpdate({ ...set, repetitions: e.target.value })}
           className="w-full px-3 py-2.5 rounded-btn bg-dark-cardAlt border border-app text-center text-primary font-semibold focus:outline-none focus:ring-1 focus:ring-accent"
         />
       </div>
-      <button onClick={() => onDelete(set)} className="text-secondary hover:text-red-400 px-2 text-lg leading-none">×</button>
+      <button
+        type="button"
+        onClick={() => onDelete(set)}
+        aria-label={`${t("workout.deleteSet")} ${set.set_number}`}
+        className="text-secondary hover:text-red-400 px-2 text-lg leading-none"
+      >
+        ×
+      </button>
     </div>
   )
 }
